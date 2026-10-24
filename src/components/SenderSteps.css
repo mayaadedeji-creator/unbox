@@ -1,0 +1,76 @@
+.sender-header {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 8px 16px;
+  box-sizing: border-box;
+  line-height: 1.3;
+}
+
+.sender-header h1 {
+  margin: 0;
+  font-size: clamp(24px, 4vw, 40px);
+  letter-spacing: -0.5px;
+  line-height: 1.15; /* the root sets a fixed 23px line height that would squash big text */
+}
+
+.sender-subtitle {
+  font-size: 15px;
+  color: #3E517A;
+}
+
+.sender-steps {
+  display: flex;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 13px;
+  color: #5b6488;
+}
+
+.sender-steps li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* connector line between steps */
+.sender-steps li + li::before {
+  content: '';
+  width: 18px;
+  height: 2px;
+  margin-right: 2px;
+  border-radius: 1px;
+  background-color: rgba(62, 81, 122, 0.3);
+}
+
+.sender-step-dot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.6);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.sender-steps li.is-current {
+  color: #08060d;
+  font-weight: 600;
+}
+
+.sender-steps li.is-current .sender-step-dot {
+  background-color: #3E517A;
+  color: #fff;
+}
+
+.sender-steps li.is-done .sender-step-dot {
+  background-color: #e0607e;
+  color: #fff;
+}

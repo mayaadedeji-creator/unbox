@@ -1,0 +1,28 @@
+.label-panel {
+  gap: 16px;
+  overflow-y: auto;
+}
+
+.label-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: #fff;
+  font-size: 15px;
+  text-align: left;
+}
+
+.label-field input {
+  font: inherit;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 12px;
+  background-color: #fff;
+  color: #08060d;
+}
+
+.label-panel .page-button {
+  margin-top: auto;
+  background-color: #B7C3F3;
+  color: #08060d;
+}

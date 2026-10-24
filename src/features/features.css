@@ -1,0 +1,473 @@
+/* ---------- Shared ---------- */
+.feature-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 15px;
+}
+
+.feature-field input,
+.feature-field textarea {
+  font: inherit;
+  padding: 10px 12px;
+  border: 1px solid #d6cdd2;
+  border-radius: 12px;
+  background-color: #fff;
+  color: #08060d;
+}
+
+.feature-hint {
+  font-size: 13px;
+  color: #6b6375;
+}
+
+.feature-error {
+  font-size: 13px;
+  color: #b3261e;
+}
+
+
+.feature-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.feature-row {
+  display: flex;
+  gap: 8px;
+}
+
+.feature-row input {
+  flex: 1;
+  min-width: 0;
+}
+
+.feature-field textarea {
+  resize: vertical;
+}
+
+.feature-button {
+  border: none;
+  border-radius: 999px;
+  padding: 10px 18px;
+  font: inherit;
+  font-size: 15px;
+  background-color: #3E517A;
+  color: #fff;
+  cursor: pointer;
+}
+
+.feature-button.secondary {
+  align-self: center;
+  background-color: #B7C3F3;
+  color: #08060d;
+}
+
+.feature-button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* ---------- Letter ---------- */
+.letter-paper {
+  position: relative;
+  padding: 28px 20px 28px 52px;
+  background-color: #fffdf7;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+/* red margin line */
+.letter-paper::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 40px;
+  width: 1px;
+  background-color: #e8a1a1;
+}
+
+.letter-text {
+  display: block;
+  width: 100%;
+  height: 320px;
+  box-sizing: border-box;
+  padding: 0;
+  border: none;
+  outline: none;
+  resize: none;
+  font-family: 'Segoe Print', 'Bradley Hand', 'Comic Sans MS', cursive;
+  font-size: 17px;
+  line-height: 32px;
+  color: #2a2438;
+  /* ruled lines that scroll along with the text */
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 31px,
+    #c9d6f2 31px,
+    #c9d6f2 32px
+  );
+  background-attachment: local;
+}
+
+.letter-count {
+  position: absolute;
+  right: 14px;
+  bottom: 6px;
+  font-size: 12px;
+  color: #9a93a3;
+}
+
+/* ---------- Photo ---------- */
+.photo-drop {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 220px;
+  padding: 16px;
+  border: 2px dashed #b7b0bc;
+  border-radius: 16px;
+  background-color: #fff;
+  text-align: center;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.photo-drop.is-dragging {
+  border-color: #3E517A;
+  background-color: #eef1fd;
+}
+
+.photo-drop.has-image {
+  padding: 0;
+  border-style: solid;
+  overflow: hidden;
+}
+
+.photo-drop input {
+  display: none;
+}
+
+.photo-drop img {
+  display: block;
+  max-width: 100%;
+  max-height: 360px;
+}
+
+/* ---------- Map pin ---------- */
+.map-results {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-radius: 12px;
+  background-color: #fff;
+  overflow: hidden;
+}
+
+.map-results button {
+  width: 100%;
+  padding: 10px 12px;
+  border: none;
+  border-bottom: 1px solid #eee;
+  background: none;
+  font: inherit;
+  font-size: 14px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.map-results button:hover {
+  background-color: #eef1fd;
+}
+
+.map-chosen {
+  font-size: 15px;
+}
+
+.map-embed {
+  width: 100%;
+  height: 260px;
+  border: 0;
+  border-radius: 12px;
+}
+
+/* ---------- Affirmation ---------- */
+.affirmation-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 180px;
+  margin: 0;
+  padding: 24px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #B7C3F3, #f6d3e0);
+  text-align: center;
+  color: #08060d;
+}
+
+.affirmation-text {
+  margin: 0;
+  font-size: 22px;
+  line-height: 1.35;
+}
+
+.affirmation-loading {
+  font-size: 15px;
+  color: #3E517A;
+}
+
+.affirmation-credit {
+  font-size: 12px;
+  color: #6b6375;
+  text-align: center;
+}
+
+.affirmation-credit a {
+  color: inherit;
+}
+
+/* ---------- Voice memo ---------- */
+.voice-memo {
+  align-items: center;
+  padding: 16px 0;
+}
+
+.voice-button {
+  border: none;
+  border-radius: 999px;
+  padding: 14px 28px;
+  font: inherit;
+  font-size: 17px;
+  background-color: #e0607e;
+  color: #fff;
+  cursor: pointer;
+}
+
+.voice-button.is-recording {
+  background-color: #3E517A;
+}
+
+.voice-timer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 28px;
+  font-variant-numeric: tabular-nums;
+}
+
+.voice-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background-color: #e0607e;
+  animation: voice-pulse 1s ease-in-out infinite;
+}
+
+@keyframes voice-pulse {
+  50% {
+    opacity: 0.25;
+  }
+}
+
+.voice-player {
+  width: 100%;
+}
+
+/* ---------- Drawing ---------- */
+.drawing-canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  border-radius: 12px;
+  background-color: #fff;
+  box-shadow: inset 0 0 0 1px #d6cdd2;
+  touch-action: none; /* stop the page scrolling while drawing on touchscreens */
+  cursor: crosshair;
+}
+
+.drawing-tools {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.drawing-swatch {
+  width: 32px;
+  height: 32px;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px #d6cdd2;
+  cursor: pointer;
+}
+
+.drawing-swatch.is-active {
+  box-shadow: 0 0 0 2px #08060d;
+}
+
+.drawing-divider {
+  width: 1px;
+  height: 24px;
+  margin: 0 4px;
+  background-color: #d6cdd2;
+}
+
+.drawing-size,
+.drawing-clear {
+  border: 1px solid #d6cdd2;
+  border-radius: 999px;
+  padding: 5px 12px;
+  font: inherit;
+  font-size: 13px;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.drawing-size.is-active {
+  background-color: #3E517A;
+  border-color: #3E517A;
+  color: #fff;
+}
+
+.drawing-clear {
+  margin-left: auto;
+}
+
+/* ---------- Scratch off ---------- */
+.mode-tabs {
+  display: flex;
+  padding: 4px;
+  border-radius: 999px;
+  background-color: #e6dde2;
+}
+
+.mode-tabs button {
+  flex: 1;
+  border: none;
+  border-radius: 999px;
+  padding: 8px;
+  font: inherit;
+  font-size: 14px;
+  background: none;
+  cursor: pointer;
+}
+
+.mode-tabs button.is-active {
+  background-color: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
+.scratch-input {
+  min-height: 90px;
+}
+
+.scratch-card {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-radius: 16px;
+  overflow: hidden;
+  background-color: #fff;
+}
+
+.scratch-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.scratch-content img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.scratch-text {
+  font-size: 26px;
+  line-height: 1.3;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+.scratch-coating {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+  cursor: grab;
+  transition: opacity 0.6s ease;
+}
+
+.scratch-coating.is-revealed {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ---------- Why I'm sending this ---------- */
+.why-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 24px;
+  border-radius: 20px;
+  background-color: #fff;
+}
+
+.why-prefix {
+  font-size: 22px;
+  font-weight: 500;
+  color: #3E517A;
+}
+
+.why-input {
+  min-height: 90px;
+  padding: 0;
+  border: none;
+  outline: none;
+  resize: none;
+  font: inherit;
+  font-size: 22px;
+  line-height: 1.35;
+  color: #08060d;
+  background: none;
+}
+
+/* ---------- Read-only views (arrival page) ---------- */
+.letter-text.is-reading {
+  height: auto;
+  min-height: 320px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.why-input.is-reading {
+  min-height: 0;
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+.viewer-image {
+  display: block;
+  width: 100%;
+  border-radius: 12px;
+  background-color: #fff;
+}
+
+.viewer-link {
+  align-self: flex-start;
+  color: #3E517A;
+  font-weight: 500;
+}
+
+.recommendation-text {
+  font-size: 18px;
+  line-height: 1.45;
+  white-space: pre-wrap;
+}

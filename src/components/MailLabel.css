@@ -1,0 +1,47 @@
+/* mail-label.svg has a lot of empty space around the label (it's a 1500×1500 canvas;
+   the label itself spans x 211–1289, y 359–1141). This crops to just the label. */
+.mail-label {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1078 / 782;
+  overflow: hidden;
+  container-type: inline-size;
+  flex-shrink: 0; /* keep its shape in cramped flex columns; overflow: hidden would let it collapse */
+}
+
+.mail-label img {
+  position: absolute;
+  width: 139.15%; /* 1500 / 1078 */
+  max-width: none;
+  left: -19.57%; /* -211 / 1078 */
+  top: -45.91%; /* -359 / 782 */
+}
+
+/* Sits on the two writing lines after "To:" / "From:" (lines start at x 609, 123 units apart) */
+.mail-label-text {
+  position: absolute;
+  left: 36.9%;
+  width: 50.6%;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  font-family: 'Segoe Print', 'Bradley Hand', 'Comic Sans MS', cursive;
+  font-size: 6.2cqw;
+  line-height: 11.4cqw;
+  color: #735e59;
+  text-align: left;
+}
+
+.mail-label-text.is-to {
+  top: 10.1%;
+}
+
+.mail-label-text.is-from {
+  top: 53.6%;
+}
+
+.mail-label-text.is-long {
+  font-size: 4.6cqw;
+}
