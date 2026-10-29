@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import DrawingCanvas from './DrawingCanvas.jsx';
 import ScratchReveal from './ScratchReveal.jsx';
-import { DRAWING_COLORS } from './helpers.js';
+import { drawingColors } from './helpers.js';
 
 const SCRATCH_TEXT_MAX = 120;
 
@@ -52,7 +52,7 @@ export default function ScratchOffEditor({ value, onChange }) {
         <DrawingCanvas
           value={value.image}
           onChange={(image) => onChange({ ...value, image })}
-          colors={DRAWING_COLORS}
+          colors={drawingColors()}
         />
       ) : (
         <label className="feature-field">

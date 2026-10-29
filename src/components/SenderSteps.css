@@ -19,7 +19,7 @@
 
 .sender-subtitle {
   font-size: 15px;
-  color: #3E517A;
+  color: var(--color-primary);
 }
 
 .sender-steps {
@@ -29,7 +29,7 @@
   padding: 0;
   list-style: none;
   font-size: 13px;
-  color: #5b6488;
+  color: var(--color-primary-light);
 }
 
 .sender-steps li {
@@ -45,7 +45,7 @@
   height: 2px;
   margin-right: 2px;
   border-radius: 1px;
-  background-color: rgba(62, 81, 122, 0.3);
+  background-color: color-mix(in srgb, var(--color-primary) 30%, transparent);
 }
 
 .sender-step-dot {
@@ -55,22 +55,22 @@
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.6);
+  background-color: color-mix(in srgb, var(--color-paper) 60%, transparent);
   font-size: 11px;
   font-weight: 600;
 }
 
 .sender-steps li.is-current {
-  color: #08060d;
+  color: var(--color-ink);
   font-weight: 600;
 }
 
 .sender-steps li.is-current .sender-step-dot {
-  background-color: #3E517A;
-  color: #fff;
+  background-color: var(--color-primary);
+  color: var(--color-paper);
 }
 
 .sender-steps li.is-done .sender-step-dot {
-  background-color: #e0607e;
-  color: #fff;
+  background-color: var(--color-pop);
+  color: var(--color-paper);
 }

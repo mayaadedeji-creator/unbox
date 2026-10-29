@@ -1,0 +1,61 @@
+/* Design tokens: every color and font in the app comes from this file.
+   To try a new look, change the values in section 1. Everything else follows. */
+
+/* 1. PALETTE: the core colors and fonts */
+:root {
+  --palette-navy:       #3E517A;
+  --palette-periwinkle: #B7C3F3;
+  --palette-blush:      #F5EDF0;
+  --palette-pink:       #e0607e;
+  --palette-ink:        #08060d;
+  --palette-white:      #ffffff;
+
+  --palette-font-display:     system-ui, 'Segoe UI', Roboto, sans-serif;
+  --palette-font-body:        system-ui, 'Segoe UI', Roboto, sans-serif;
+  --palette-font-handwriting: 'Segoe Print', 'Bradley Hand', 'Comic Sans MS', cursive;
+  --palette-font-mono:        ui-monospace, Consolas, monospace;
+}
+
+/* 2. ROLES: what the rest of the CSS uses. Lighter and darker shades are mixed
+   from the palette, so they follow along when the palette changes. */
+:root {
+  --color-primary:        var(--palette-navy);
+  --color-primary-dark:   color-mix(in srgb, var(--palette-navy) 75%, black);
+  --color-primary-light:  color-mix(in srgb, var(--palette-navy) 85%, white);
+
+  --color-secondary:      var(--palette-periwinkle);
+  --color-secondary-soft: color-mix(in srgb, var(--palette-periwinkle) 25%, white);
+
+  --color-surface:        var(--palette-blush);
+  --color-border:         color-mix(in srgb, var(--palette-blush) 85%, var(--palette-ink));
+  --color-border-soft:    color-mix(in srgb, var(--palette-blush) 93%, var(--palette-ink));
+
+  --color-pop:            var(--palette-pink);
+  --color-pop-soft:       color-mix(in srgb, var(--palette-pink) 25%, white);
+
+  --color-ink:            var(--palette-ink);
+  --color-ink-soft:       color-mix(in srgb, var(--palette-ink) 60%, white);
+  --color-ink-muted:      color-mix(in srgb, var(--palette-ink) 40%, white);
+  --color-ink-faint:      color-mix(in srgb, var(--palette-ink) 30%, white);
+
+  --color-paper:          var(--palette-white);
+  --color-overlay:        color-mix(in srgb, var(--palette-ink) 45%, transparent);
+
+  --font-display:     var(--palette-font-display);
+  --font-body:        var(--palette-font-body);
+  --font-handwriting: var(--palette-font-handwriting);
+  --font-mono:        var(--palette-font-mono);
+}
+
+/* 3. FIXED: materials and meanings that stay the same whatever the palette */
+:root {
+  --color-error:        #b3261e;
+  --color-letter-paper: #fffdf7;
+  --color-letter-rule:  #c9d6f2;  /* the blue lines on the letter paper */
+  --color-letter-margin: #e8a1a1; /* the red margin line */
+  --color-label-ink:    #735e59;  /* matches the brown in mail-label.svg */
+  --color-foil-light:   #eeeef2;  /* scratch-off foil */
+  --color-foil:         #c9c9d1;
+  --color-foil-dark:    #b4b4bf;
+  --color-foil-text:    #6b6375;
+}

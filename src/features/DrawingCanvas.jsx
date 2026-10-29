@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { cssVar } from './helpers.js';
 
 // Internal resolution; the canvas is scaled to fit the modal with CSS.
 const WIDTH = 480;
@@ -14,7 +15,7 @@ export default function DrawingCanvas({ value, onChange, colors }) {
   const [size, setSize] = useState(SIZES.Thin);
 
   const paintBlank = (ctx) => {
-    ctx.fillStyle = '#fff';
+    ctx.fillStyle = cssVar('--color-paper');
     ctx.fillRect(0, 0, WIDTH, HEIGHT);
   };
 
