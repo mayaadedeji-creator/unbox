@@ -1,0 +1,70 @@
+.address-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background-color: var(--color-overlay);
+  animation: overlay-in 0.25s ease-out;
+}
+
+.address-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 48px;
+  height: 48px;
+  border: none;
+  border-radius: 50%;
+  background-color: color-mix(in srgb, var(--color-paper) 85%, transparent);
+  color: var(--color-ink);
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.address-close:hover {
+  background-color: var(--color-paper);
+}
+
+.address-focus {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: min(620px, 100%);
+}
+
+.address-tag {
+  width: 100%;
+  transform: rotate(-2deg);
+  filter: drop-shadow(0 18px 30px rgba(0, 0, 0, 0.3));
+  animation: tag-forward 0.4s cubic-bezier(0.3, 1.4, 0.5, 1);
+}
+
+.address-error {
+  min-height: 1.4em;
+  margin: -8px 0 0;
+  font-size: 15px;
+  color: var(--color-paper);
+}
+
+@keyframes overlay-in {
+  from { opacity: 0; }
+}
+
+@keyframes tag-forward {
+  from {
+    opacity: 0;
+    transform: rotate(6deg) scale(0.6) translateY(40px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .address-overlay,
+  .address-tag {
+    animation: none;
+  }
+}

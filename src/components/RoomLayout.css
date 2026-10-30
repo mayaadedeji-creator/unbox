@@ -1,0 +1,22 @@
+.room {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  box-sizing: border-box;
+  background-color: var(--color-surface);
+  overflow: hidden;
+}
+
+.room-wordmark {
+  position: absolute;
+  top: 20px;
+  left: 28px;
+  font-family: var(--font-handwriting);
+  font-size: 26px;
+  color: var(--color-primary);
+}
