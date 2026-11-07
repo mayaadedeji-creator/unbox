@@ -15,6 +15,7 @@
   max-width: none;
   left: -19.57%; /* -211 / 1078 */
   top: -45.91%; /* -359 / 782 */
+  pointer-events: none; /* the cropped-off parts would otherwise block clicks below the label */
 }
 
 /* Sits on the two writing lines after "To:" / "From:" (lines start at x 609, 123 units apart) */
@@ -44,4 +45,70 @@
 
 .mail-label-text.is-long {
   font-size: 4.6cqw;
+}
+
+/* Typeable version (address step) */
+.mail-label-text.is-editable {
+  display: block;
+  height: 22.8cqw; /* two lines */
+  overflow: visible;
+  white-space: pre-wrap;
+}
+
+.mail-label-text.is-editable textarea {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  font: inherit;
+  line-height: inherit;
+  letter-spacing: inherit; /* text boxes don't pick this up on their own, which shifts the caret */
+  word-spacing: inherit;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  color: transparent;
+  caret-color: var(--color-label-ink);
+  resize: none;
+  overflow: hidden;
+  outline: none;
+}
+
+.mail-label-text.is-editable textarea::placeholder {
+  color: color-mix(in srgb, var(--color-label-ink) 45%, transparent);
+}
+
+.mail-label-text.is-editable:focus-within {
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--color-secondary) 14%, transparent);
+}
+
+.mail-label-ink {
+  position: relative; /* paints above the invisible text box */
+  z-index: 1;
+  pointer-events: none;
+  overflow-wrap: anywhere;
+}
+
+/* A new letter lands blurry and pink, then dries into the label's ink */
+.ink-letter {
+  animation: ink-in 0.45s ease-out both;
+}
+
+@keyframes ink-in {
+  from {
+    opacity: 0;
+    filter: blur(3px);
+    color: var(--color-pop);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ink-letter {
+    animation: none;
+  }
 }

@@ -1,100 +1,39 @@
-.arrival-stage {
-  align-items: center;
-}
-
-.arrival-box {
+.unbox-box {
   flex: 1;
-  min-height: 0;
-  width: 100%;
   display: flex;
   padding: 0;
   border: none;
   background: none;
 }
 
-.arrival-box.is-closed {
+/* The closed box gives a little shake every few seconds, asking to be opened */
+.unbox-box.is-closed {
   cursor: pointer;
-  animation: arrival-wiggle 2.6s ease-in-out infinite;
+  animation: unbox-shake 2.6s ease-in-out infinite;
 }
 
-.arrival-box.is-closed:hover {
+.unbox-box.is-closed:hover {
   animation-play-state: paused;
-  transform: scale(1.03);
+  transform: scale(1.04);
 }
 
-.arrival-box.is-closed:disabled {
+.unbox-box.is-closed:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 4px;
+  border-radius: 16px;
+}
+
+.unbox-box.is-closed:disabled {
   cursor: default;
   animation: none;
   opacity: 0.6;
 }
 
-.arrival-box.is-open {
-  animation: arrival-pop 0.5s ease-out;
+.unbox-box.is-open {
+  animation: unbox-pop 0.5s ease-out;
 }
 
-.arrival-hint {
-  flex-shrink: 0;
-  padding-top: 12px;
-  font-size: 18px;
-  color: var(--color-primary);
-}
-
-/* Items rise in one after another when the box opens */
-.arrival-item {
-  position: relative;
-  animation: arrival-rise 0.45s ease-out both;
-}
-
-/* Pink dot on items that haven't been opened yet */
-.arrival-item::after {
-  content: '';
-  position: absolute;
-  top: 6px;
-  right: 6px;
-  width: 12px;
-  height: 12px;
-  border: 2px solid var(--color-primary);
-  border-radius: 50%;
-  background-color: var(--color-pop);
-}
-
-.arrival-item.is-seen::after {
-  display: none;
-}
-
-/* Buttons pinned to the bottom of the side panel (Share, Keep editing, Make your own...) */
-.unboxing-actions {
-  flex-shrink: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin: auto 6px 0 0; /* auto top margin pins it to the bottom */
-}
-
-.panel-button {
-  padding: 10px 20px;
-  border: 2px solid var(--color-secondary);
-  border-radius: 999px;
-  font: inherit;
-  font-size: 15px;
-  background-color: var(--color-secondary);
-  color: var(--color-ink);
-  text-align: center;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.panel-button.is-secondary {
-  background-color: transparent;
-  color: var(--color-paper);
-}
-
-.panel-button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-@keyframes arrival-wiggle {
+@keyframes unbox-shake {
   0%, 78%, 100% { transform: rotate(0); }
   82% { transform: rotate(-3deg); }
   86% { transform: rotate(3deg); }
@@ -102,27 +41,15 @@
   94% { transform: rotate(1deg); }
 }
 
-@keyframes arrival-pop {
+@keyframes unbox-pop {
   0% { transform: scale(0.85); }
   60% { transform: scale(1.05); }
   100% { transform: scale(1); }
 }
 
-@keyframes arrival-rise {
-  from {
-    opacity: 0;
-    transform: translateY(16px);
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .arrival-box.is-closed,
-  .arrival-box.is-open,
-  .arrival-item {
+  .unbox-box.is-closed,
+  .unbox-box.is-open {
     animation: none;
   }
-}
-
-.item-list + .unboxing-actions {
-  margin-top: 12px;
 }

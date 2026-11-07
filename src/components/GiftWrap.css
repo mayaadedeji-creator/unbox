@@ -1,0 +1,67 @@
+/* Sits exactly over the box drawing (same square), under the label */
+.gift-wrap {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.wrap-face.is-top { fill: var(--color-wrap); }
+.wrap-face.is-left { fill: var(--color-wrap-shade); }
+.wrap-face.is-right { fill: var(--color-wrap-dark); }
+
+.wrap-dot {
+  fill: color-mix(in srgb, var(--color-paper) 45%, transparent);
+}
+
+.wrap-ribbon {
+  fill: var(--color-ribbon);
+}
+
+.wrap-ribbon.is-side {
+  fill: var(--color-ribbon-dark);
+}
+
+.wrap-loop {
+  fill: var(--color-ribbon);
+  stroke: var(--color-ribbon-dark);
+  stroke-width: 14;
+}
+
+.wrap-knot {
+  fill: var(--color-ribbon-dark);
+}
+
+/* The wrapping happens in order: paper over the lid and sides, then each ribbon
+   strip, then the bow pops on. Each piece unrolls from its top edge. */
+.wrap-piece {
+  transform-box: fill-box;
+  animation: wrap-unroll 0.45s ease-out both;
+  animation-delay: calc(0.3s + var(--step) * 0.18s);
+}
+
+.wrap-bow {
+  transform-box: fill-box;
+  transform-origin: 50% 70%;
+  animation: bow-pop 0.55s cubic-bezier(0.3, 1.8, 0.5, 1) 1.9s both;
+}
+
+@keyframes wrap-unroll {
+  from { clip-path: inset(0 0 100% 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+
+@keyframes bow-pop {
+  from {
+    opacity: 0;
+    transform: scale(0) rotate(-25deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wrap-piece,
+  .wrap-bow {
+    animation: none;
+  }
+}

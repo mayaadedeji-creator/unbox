@@ -41,6 +41,13 @@
   --color-paper:          var(--palette-white);
   --color-overlay:        color-mix(in srgb, var(--palette-ink) 45%, transparent);
 
+  /* Gift wrapping on the share page */
+  --color-wrap:           var(--palette-periwinkle);
+  --color-wrap-shade:     color-mix(in srgb, var(--palette-periwinkle) 82%, var(--palette-navy));
+  --color-wrap-dark:      color-mix(in srgb, var(--palette-periwinkle) 62%, var(--palette-navy));
+  --color-ribbon:         var(--palette-pink);
+  --color-ribbon-dark:    color-mix(in srgb, var(--palette-pink) 75%, black);
+
   --font-display:     var(--palette-font-display);
   --font-body:        var(--palette-font-body);
   --font-handwriting: var(--palette-font-handwriting);

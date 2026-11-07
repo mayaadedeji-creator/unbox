@@ -2,15 +2,18 @@ import './BoxDisplay.css';
 import openBox from '../assets/box/open-box.svg';
 import closedBox from '../assets/box/closed-box.svg';
 import MailLabel from './MailLabel.jsx';
+import GiftWrap from './GiftWrap.jsx';
 
 // label: optional { to, from } — shows the shipping label stuck on the side of the box.
-export default function BoxDisplay({ state = 'open', label }) {
+// wrapped: draws wrapping paper, ribbon and a bow over the closed box.
+export default function BoxDisplay({ state = 'open', label, wrapped = false }) {
   const image = state === 'open' ? openBox : closedBox;
 
   return (
     <div className="box-display">
-      <div className={`box-frame is-${state}`}>
-        <img src={image} alt={state === 'open' ? 'Open box' : 'Closed box'} />
+      <div className={`box-frame is-${state}${wrapped ? ' is-wrapped' : ''}`}>
+        <img src={image} alt={state === 'open' ? 'Open box' : wrapped ? 'Wrapped gift' : 'Closed box'} />
+        {wrapped && state === 'closed' && <GiftWrap />}
         {label && (
           <div className="box-label">
             <MailLabel to={label.to} from={label.from} />

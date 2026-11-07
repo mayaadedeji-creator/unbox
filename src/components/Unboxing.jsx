@@ -1,18 +1,26 @@
 import { useState } from 'react';
 import BoxDisplay from './BoxDisplay.jsx';
-import Modal from './Modal.jsx';
+import GiftRing from './GiftRing.jsx';
+import RoomOverlay from './RoomOverlay.jsx';
 import { getFeature } from '../features';
 import './Unboxing.css';
 
-// The closed box → open box → open each item experience.
+// The closed box → open box → open each gift experience, in the room.
 // Used by the maker's preview and by the recipient's gift page; the page decides
 // whether opening is remembered (opened/seen + callbacks) and what buttons show (actions).
 export default function Unboxing({ gift, opened, onOpen, seen, onSee, actions }) {
   const { to, from, items } = gift;
   const [viewing, setViewing] = useState(null);
+  // Only fly the gifts out when the box is opened right now, not when coming back to it.
+  const [justOpened, setJustOpened] = useState(false);
 
   const isEmpty = items.length === 0;
   const Viewer = viewing && getFeature(viewing.id).Viewer;
+
+  const open = () => {
+    setJustOpened(true);
+    onOpen();
+  };
 
   const view = (item) => {
     setViewing(item);
@@ -27,49 +35,54 @@ export default function Unboxing({ gift, opened, onOpen, seen, onSee, actions })
 
   return (
     <>
-      <div className="in-box-2 arrival-stage">
+      <GiftRing
+        gifts={opened ? items : []}
+        onPick={view}
+        badge={(item) => (seen.has(item.id) ? null : 'dot')}
+        burst={justOpened}
+        label="Gifts in the box"
+      >
         {opened ? (
-          <div className="arrival-box is-open">
+          <div className="unbox-box is-open">
             <BoxDisplay state="open" label={{ to, from }} />
           </div>
         ) : (
           <button
-            className="arrival-box is-closed"
-            onClick={onOpen}
+            className="unbox-box is-closed"
+            onClick={open}
             disabled={isEmpty}
             aria-label="Open the box"
           >
             <BoxDisplay state="closed" label={{ to, from }} />
           </button>
         )}
-        <p className="arrival-hint">{hint}</p>
-      </div>
+      </GiftRing>
 
-      <div className="in-box-3">
-        {opened && (
-          <div className="item-list">
-            {items.map((item, index) => (
-              <button
-                key={item.id}
-                className={`item-card arrival-item${seen.has(item.id) ? ' is-seen' : ''}`}
-                style={{ animationDelay: `${index * 90}ms` }}
-                onClick={() => view(item)}
-              >
-                <div className="item-thumb">
-                  <img src={item.image} alt="" />
-                </div>
-                <span className="item-name">{item.name}</span>
-              </button>
-            ))}
-          </div>
-        )}
-        {actions && <div className="unboxing-actions">{actions}</div>}
+      <div className="room-actions">
+        <p className="room-hint">{hint}</p>
+        {actions}
       </div>
 
       {viewing && (
-        <Modal title={viewing.name} icon={viewing.image} onClose={() => setViewing(null)}>
-          <Viewer value={viewing.data} />
-        </Modal>
+        <RoomOverlay
+          label={viewing.name}
+          onClose={() => setViewing(null)}
+          heading={
+            <h2 className="activity-heading">
+              <img src={viewing.image} alt="" />
+              {viewing.name}
+            </h2>
+          }
+          actions={
+            <button className="room-button" onClick={() => setViewing(null)}>
+              Back to the box
+            </button>
+          }
+        >
+          <div className="activity">
+            <Viewer value={viewing.data} />
+          </div>
+        </RoomOverlay>
       )}
     </>
   );

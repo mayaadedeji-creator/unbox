@@ -57,31 +57,21 @@ export default function GiftPage() {
   };
 
   if (gift === undefined) {
-    return (
-      <div className="in-box-1">
-        <h1>Loading your gift…</h1>
-      </div>
-    );
+    return <p className="room-hint">Loading your gift…</p>;
   }
 
   if (gift === null) {
     return (
       <>
-        <div className="in-box-1">
-          <h1>We couldn't find this gift</h1>
-        </div>
-        <div className="in-box-2 gift-missing">
-          <p>
-            Double-check the link you were sent.
-            {!savesOnline && " (While testing locally, gifts only open in the browser they were made in.)"}
-          </p>
-        </div>
-        <div className="in-box-3">
-          <div className="unboxing-actions">
-            <button className="panel-button" onClick={makeOwn}>
-              Make a gift
-            </button>
-          </div>
+        <h1 className="room-title">We couldn't find this gift</h1>
+        <p className="room-caption">
+          Double-check the link you were sent.
+          {!savesOnline && " (While testing locally, gifts only open in the browser they were made in.)"}
+        </p>
+        <div className="room-actions">
+          <button className="room-button" onClick={makeOwn}>
+            Make a gift
+          </button>
         </div>
       </>
     );
@@ -91,9 +81,9 @@ export default function GiftPage() {
 
   return (
     <>
-      <div className="in-box-1">
-        <h1>{gift.from ? `A package from ${gift.from}` : "You've got a package!"}</h1>
-      </div>
+      <h1 className="room-title">
+        {gift.from ? `A package from ${gift.from}` : "You've got a package!"}
+      </h1>
 
       <Unboxing
         gift={gift}
@@ -102,7 +92,7 @@ export default function GiftPage() {
         seen={progress.seen}
         onSee={see}
         actions={
-          <button className={`panel-button${allSeen ? '' : ' is-secondary'}`} onClick={makeOwn}>
+          <button className={allSeen ? 'room-button' : 'room-text-button'} onClick={makeOwn}>
             Make your own gift
           </button>
         }

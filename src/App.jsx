@@ -1,20 +1,18 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { PackageProvider } from './context/PackageContext';
-import Layout from './components/Layout';
+import RoomLayout from './components/RoomLayout';
 import OpeningPage from './pages/OpeningPage';
 import FillTheBoxPage from './pages/FillTheBoxPage';
 import PreviewPage from './pages/PreviewPage';
 import SharePage from './pages/SharePage';
 import GiftPage from './pages/GiftPage';
-import './App.css';
-
 
 function App() {
   return (
     <PackageProvider>
       <BrowserRouter>
         <Routes>
-          <Route element={<Layout />}>
+          <Route element={<RoomLayout />}>
             {/* The maker's steps */}
             <Route path="/" element={<OpeningPage />} />
             <Route path="/fill-the-box" element={<FillTheBoxPage />} />
