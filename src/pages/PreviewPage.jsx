@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { usePackage } from '../context/PackageContext';
-import SenderSteps from '../components/SenderSteps.jsx';
 import Unboxing from '../components/Unboxing.jsx';
 import { saveGift } from '../storage/gifts.js';
 
@@ -15,7 +14,7 @@ export default function PreviewPage() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
 
-  const share = async () => {
+  const wrap = async () => {
     setSaving(true);
     setError('');
     try {
@@ -23,20 +22,22 @@ export default function PreviewPage() {
       navigate(`/share/${id}`);
     } catch (err) {
       console.error("Couldn't save gift", err);
-      setError("Couldn't save your gift. Please try again.");
+      setError("Couldn't save your gift. Try again.");
       setSaving(false);
     }
   };
 
   return (
     <>
-      <div className="in-box-1">
-        <SenderSteps
-          step={3}
-          title="Preview your gift"
-          subtitle={`This is what ${to || 'they'} will see. Opening things here won't spoil it.`}
-        />
-      </div>
+      <h1 className="sr-only">Step 3 of 4: Preview your gift</h1>
+
+      <button className="room-back" onClick={() => navigate('/fill-the-box')}>
+        ← Keep editing
+      </button>
+
+      <p className="room-caption">
+        Preview: this is what {to || 'they'} will see. Opening things here won't spoil it.
+      </p>
 
       <Unboxing
         gift={{ to, from, items }}
@@ -46,13 +47,10 @@ export default function PreviewPage() {
         onSee={(id) => setSeen((prev) => new Set(prev).add(id))}
         actions={
           <>
-            {error && <p className="panel-error">{error}</p>}
-            <button className="panel-button" onClick={share} disabled={saving || items.length === 0}>
-              {saving ? 'Wrapping it up…' : 'Share this gift →'}
+            <button className="room-button" onClick={wrap} disabled={saving || items.length === 0}>
+              {saving ? 'Wrapping it up…' : 'Wrap it up →'}
             </button>
-            <button className="panel-button is-secondary" onClick={() => navigate('/fill-the-box')}>
-              ← Keep editing
-            </button>
+            {error && <p className="room-error">{error}</p>}
           </>
         }
       />

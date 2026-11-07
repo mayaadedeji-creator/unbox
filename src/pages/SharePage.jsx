@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { usePackage } from '../context/PackageContext';
-import SenderSteps from '../components/SenderSteps.jsx';
 import BoxDisplay from '../components/BoxDisplay.jsx';
 import { giftUrl, loadGift } from '../storage/gifts.js';
 import './SharePage.css';
 
-// Step 4: the gift is saved — give the maker the link to send.
+// Step 4: the gift is saved. It gets wrapped in front of you, then you get the link to send.
 export default function SharePage() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -37,40 +36,44 @@ export default function SharePage() {
 
   if (gift === null) {
     return (
-      <div className="in-box-1">
-        <SenderSteps step={4} title="We couldn't find that gift" />
-      </div>
+      <>
+        <h1 className="room-title">We couldn't find that gift</h1>
+        <div className="room-actions">
+          <button className="room-button" onClick={makeAnother}>
+            Make a gift
+          </button>
+        </div>
+      </>
     );
   }
 
   return (
     <>
-      <div className="in-box-1">
-        <SenderSteps step={4} title="Your gift is wrapped!" subtitle="Send this link and they'll get to unbox it." />
+      <h1 className="room-title share-title">Your gift is wrapped!</h1>
+
+      <div className="share-stage">
+        <div className="share-box">
+          <BoxDisplay state="closed" wrapped label={gift && { to: gift.to, from: gift.from }} />
+        </div>
       </div>
 
-      <div className="in-box-2">
-        <BoxDisplay state="closed" label={gift && { to: gift.to, from: gift.from }} />
-      </div>
-
-      <div className="in-box-3 share-panel">
-        <label className="share-field">
+      <div className="room-actions share-actions">
+        <label className="share-label" htmlFor="share-link">
           Send this link to {gift?.to || 'them'}
-          <input id="share-link" readOnly value={url} onFocus={(e) => e.target.select()} />
         </label>
-        <button className="panel-button" onClick={copy}>
-          {copied ? 'Copied ✓' : 'Copy link'}
-        </button>
-        <p className="share-note">
-          Heads up: opening the link yourself counts as unwrapping it on this device.
-          Use your preview to check it instead.
-        </p>
-
-        <div className="unboxing-actions">
-          <button className="panel-button is-secondary" onClick={makeAnother}>
-            Make another gift
+        <div className="share-link">
+          <input id="share-link" readOnly value={url} onFocus={(e) => e.target.select()} />
+          <button className="room-button" onClick={copy}>
+            {copied ? 'Copied ✓' : 'Copy link'}
           </button>
         </div>
+        <p className="share-note">
+          Heads up: opening the link yourself counts as unwrapping it on this device. Use your
+          preview to check it instead.
+        </p>
+        <button className="room-text-button" onClick={makeAnother}>
+          Make another gift
+        </button>
       </div>
     </>
   );

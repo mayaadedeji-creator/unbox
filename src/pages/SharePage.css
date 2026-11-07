@@ -1,35 +1,91 @@
-.share-panel {
-  gap: 12px;
-  overflow-y: auto;
+/* Same size as the box on the other pages, so it doesn't jump between steps */
+.share-stage {
+  position: relative;
+  width: min(92vw, 64svh);
+  aspect-ratio: 1;
+  flex-shrink: 0;
 }
 
-.share-field {
+/* Matches the closed box on the preview page (see .ring-center in GiftRing.css) */
+.share-box {
+  position: absolute;
+  inset: 8%;
   display: flex;
-  flex-direction: column;
-  gap: 6px;
-  color: var(--color-paper);
-  font-size: 15px;
-  text-align: left;
 }
 
-.share-field input {
-  font: inherit;
-  font-size: 14px;
-  padding: 10px 14px;
-  border: none;
-  border-radius: 12px;
+/* A little hop once the bow is on */
+.share-stage .box-frame.is-wrapped {
+  animation: wrapped-hop 0.5s ease-out 2.4s;
+}
+
+/* The title and link fade in after the wrapping finishes */
+.share-title,
+.share-actions {
+  animation: share-reveal 0.5s ease-out 2.5s both;
+}
+
+.share-actions {
+  width: min(520px, 100%);
+}
+
+.share-label {
+  font-size: 15px;
+  color: var(--color-ink-soft);
+}
+
+.share-link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  padding: 6px;
+  box-sizing: border-box;
+  border-radius: 999px;
   background-color: var(--color-paper);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+.share-link input {
+  flex: 1;
+  min-width: 0;
+  padding: 8px 14px;
+  border: none;
+  background: none;
+  font: inherit;
+  font-size: 15px;
   color: var(--color-ink);
+  outline-offset: 2px;
+}
+
+.share-link .room-button {
+  flex-shrink: 0;
+  padding: 10px 22px;
+  font-size: 15px;
 }
 
 .share-note {
   font-size: 13px;
   line-height: 1.4;
-  color: color-mix(in srgb, var(--color-paper) 70%, transparent);
-  text-align: left;
+  color: var(--color-ink-muted);
 }
 
-.panel-error {
-  font-size: 13px;
-  color: var(--color-pop-soft);
+@keyframes wrapped-hop {
+  0%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-14px); }
+  70% { transform: translateY(0) scaleY(0.97); }
+}
+
+@keyframes share-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .share-stage .box-frame.is-wrapped,
+  .share-title,
+  .share-actions {
+    animation: none;
+  }
 }

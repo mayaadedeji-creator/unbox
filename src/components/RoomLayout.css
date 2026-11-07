@@ -20,3 +20,101 @@
   font-size: 26px;
   color: var(--color-primary);
 }
+
+/* Shared by every room page */
+.room-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  min-height: 96px;
+  margin-top: 8px;
+}
+
+.room-hint {
+  font-size: 17px;
+  color: var(--color-primary);
+}
+
+.room-button {
+  padding: 14px 32px;
+  border: none;
+  border-radius: 999px;
+  font: inherit;
+  font-size: 17px;
+  background-color: var(--color-primary);
+  color: var(--color-paper);
+  cursor: pointer;
+  transition: background-color 0.15s, transform 0.15s;
+}
+
+.room-button:hover {
+  background-color: var(--color-primary-dark);
+  transform: translateY(-1px);
+}
+
+.room-text-button {
+  padding: 4px 8px;
+  border: none;
+  background: none;
+  font: inherit;
+  font-size: 15px;
+  color: var(--color-primary);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Small "back" link under the wordmark */
+.room-back {
+  position: absolute;
+  top: 60px;
+  left: 20px;
+  z-index: 2;
+  padding: 6px 10px;
+  border: none;
+  border-radius: 999px;
+  background: none;
+  font: inherit;
+  font-size: 15px;
+  color: var(--color-primary);
+  cursor: pointer;
+}
+
+.room-back:hover {
+  background-color: color-mix(in srgb, var(--color-primary) 10%, transparent);
+}
+
+/* A line of text above the stage (preview note, "A package from…") */
+.room-caption {
+  max-width: 32em;
+  margin: 0 0 4px;
+  font-size: 15px;
+  color: var(--color-ink-soft);
+}
+
+.room-title {
+  margin: 0 0 4px;
+  font-size: clamp(24px, 4vw, 34px);
+  letter-spacing: normal;
+  color: var(--color-ink);
+}
+
+.room-error {
+  font-size: 14px;
+  color: var(--color-error);
+}
+
+.room-button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+  transform: none;
+}
