@@ -15,7 +15,7 @@
   height: 100%;
   box-sizing: border-box;
   scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.35) transparent;
+  scrollbar-color: color-mix(in srgb, var(--color-paper) 35%, transparent) transparent;
 }
 
 .item-card {
@@ -23,7 +23,7 @@
   flex-direction: column;    /* was row (default) — stacks children vertically */
   align-items: stretch;      /* lets the image fill the card's full width */
   gap: 24px;                 /* keeping your existing gap */
-  background-color: rgba(255, 255, 255, 0.12);
+  background-color: color-mix(in srgb, var(--color-paper) 12%, transparent);
   border: none;
   border-radius: 16px;
   padding: 8px 12px;         /* keeping your existing padding */
@@ -32,14 +32,14 @@
 }
 
 .item-card:hover {
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: color-mix(in srgb, var(--color-paper) 20%, transparent);
 }
 
 .item-thumb {
   width: 100%;              /* was 60px — now fills the card's full width */
   aspect-ratio: 1 / 1;       /* keeps it a perfect square as width changes */
   border-radius: 8px;
-  background-color: #fff;
+  background-color: var(--color-paper);
   overflow: hidden;
 }
 
@@ -50,7 +50,7 @@
 }
 
 .item-name {
-  color: white;
+  color: var(--color-paper);
   font-size: 14px;
   font-family: inherit;
   text-align: center;
@@ -62,8 +62,8 @@
 }
 
 .item-card.is-in-box {
-  background-color: rgba(183, 195, 243, 0.35);
-  box-shadow: inset 0 0 0 2px #B7C3F3;
+  background-color: color-mix(in srgb, var(--color-secondary) 35%, transparent);
+  box-shadow: inset 0 0 0 2px var(--color-secondary);
 }
 
 .item-check {
@@ -76,10 +76,10 @@
   justify-content: center;
   width: 26px;
   height: 26px;
-  border: 2px solid #3E517A;
+  border: 2px solid var(--color-primary);
   border-radius: 50%;
-  background-color: #e0607e;
-  color: #fff;
+  background-color: var(--color-pop);
+  color: var(--color-paper);
   font-size: 14px;
   font-weight: 700;
   line-height: 1;
@@ -101,13 +101,13 @@
   border-radius: 999px;
   font: inherit;
   font-size: 16px;
-  background-color: #3E517A;
-  color: #fff;
+  background-color: var(--color-primary);
+  color: var(--color-paper);
   cursor: pointer;
 }
 
 .page-button:hover {
-  background-color: #2f3f60;
+  background-color: var(--color-primary-dark);
 }
 
 .page-button:disabled {
@@ -119,5 +119,5 @@
   justify-content: center;
   align-items: center;
   font-size: 18px;
-  color: #3E517A;
+  color: var(--color-primary);
 }

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { cssVar } from './helpers.js';
 
 const WIDTH = 480;
 const HEIGHT = 360;
@@ -14,12 +15,12 @@ export default function ScratchReveal({ children }) {
   useEffect(() => {
     const ctx = canvasRef.current.getContext('2d');
     const gradient = ctx.createLinearGradient(0, 0, WIDTH, HEIGHT);
-    gradient.addColorStop(0, '#c9c9d1');
-    gradient.addColorStop(0.5, '#eeeef2');
-    gradient.addColorStop(1, '#b4b4bf');
+    gradient.addColorStop(0, cssVar('--color-foil'));
+    gradient.addColorStop(0.5, cssVar('--color-foil-light'));
+    gradient.addColorStop(1, cssVar('--color-foil-dark'));
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, WIDTH, HEIGHT);
-    ctx.fillStyle = '#6b6375';
+    ctx.fillStyle = cssVar('--color-foil-text');
     ctx.font = '600 28px system-ui, sans-serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';

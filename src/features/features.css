@@ -10,20 +10,20 @@
 .feature-field textarea {
   font: inherit;
   padding: 10px 12px;
-  border: 1px solid #d6cdd2;
+  border: 1px solid var(--color-border);
   border-radius: 12px;
-  background-color: #fff;
-  color: #08060d;
+  background-color: var(--color-paper);
+  color: var(--color-ink);
 }
 
 .feature-hint {
   font-size: 13px;
-  color: #6b6375;
+  color: var(--color-ink-soft);
 }
 
 .feature-error {
   font-size: 13px;
-  color: #b3261e;
+  color: var(--color-error);
 }
 
 
@@ -53,15 +53,15 @@
   padding: 10px 18px;
   font: inherit;
   font-size: 15px;
-  background-color: #3E517A;
-  color: #fff;
+  background-color: var(--color-primary);
+  color: var(--color-paper);
   cursor: pointer;
 }
 
 .feature-button.secondary {
   align-self: center;
-  background-color: #B7C3F3;
-  color: #08060d;
+  background-color: var(--color-secondary);
+  color: var(--color-ink);
 }
 
 .feature-button:disabled {
@@ -73,7 +73,7 @@
 .letter-paper {
   position: relative;
   padding: 28px 20px 28px 52px;
-  background-color: #fffdf7;
+  background-color: var(--color-letter-paper);
   border-radius: 6px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
 }
@@ -86,7 +86,7 @@
   bottom: 0;
   left: 40px;
   width: 1px;
-  background-color: #e8a1a1;
+  background-color: var(--color-letter-margin);
 }
 
 .letter-text {
@@ -98,17 +98,17 @@
   border: none;
   outline: none;
   resize: none;
-  font-family: 'Segoe Print', 'Bradley Hand', 'Comic Sans MS', cursive;
+  font-family: var(--font-handwriting);
   font-size: 17px;
   line-height: 32px;
-  color: #2a2438;
+  color: var(--color-ink);
   /* ruled lines that scroll along with the text */
   background: repeating-linear-gradient(
     to bottom,
     transparent 0,
     transparent 31px,
-    #c9d6f2 31px,
-    #c9d6f2 32px
+    var(--color-letter-rule) 31px,
+    var(--color-letter-rule) 32px
   );
   background-attachment: local;
 }
@@ -118,7 +118,7 @@
   right: 14px;
   bottom: 6px;
   font-size: 12px;
-  color: #9a93a3;
+  color: var(--color-ink-muted);
 }
 
 /* ---------- Photo ---------- */
@@ -128,17 +128,17 @@
   justify-content: center;
   min-height: 220px;
   padding: 16px;
-  border: 2px dashed #b7b0bc;
+  border: 2px dashed var(--color-ink-faint);
   border-radius: 16px;
-  background-color: #fff;
+  background-color: var(--color-paper);
   text-align: center;
   font-size: 15px;
   cursor: pointer;
 }
 
 .photo-drop.is-dragging {
-  border-color: #3E517A;
-  background-color: #eef1fd;
+  border-color: var(--color-primary);
+  background-color: var(--color-secondary-soft);
 }
 
 .photo-drop.has-image {
@@ -163,7 +163,7 @@
   padding: 0;
   list-style: none;
   border-radius: 12px;
-  background-color: #fff;
+  background-color: var(--color-paper);
   overflow: hidden;
 }
 
@@ -171,7 +171,7 @@
   width: 100%;
   padding: 10px 12px;
   border: none;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--color-border-soft);
   background: none;
   font: inherit;
   font-size: 14px;
@@ -180,7 +180,7 @@
 }
 
 .map-results button:hover {
-  background-color: #eef1fd;
+  background-color: var(--color-secondary-soft);
 }
 
 .map-chosen {
@@ -203,9 +203,9 @@
   margin: 0;
   padding: 24px;
   border-radius: 20px;
-  background: linear-gradient(135deg, #B7C3F3, #f6d3e0);
+  background: linear-gradient(135deg, var(--color-secondary), var(--color-pop-soft));
   text-align: center;
-  color: #08060d;
+  color: var(--color-ink);
 }
 
 .affirmation-text {
@@ -216,12 +216,12 @@
 
 .affirmation-loading {
   font-size: 15px;
-  color: #3E517A;
+  color: var(--color-primary);
 }
 
 .affirmation-credit {
   font-size: 12px;
-  color: #6b6375;
+  color: var(--color-ink-soft);
   text-align: center;
 }
 
@@ -241,13 +241,13 @@
   padding: 14px 28px;
   font: inherit;
   font-size: 17px;
-  background-color: #e0607e;
-  color: #fff;
+  background-color: var(--color-pop);
+  color: var(--color-paper);
   cursor: pointer;
 }
 
 .voice-button.is-recording {
-  background-color: #3E517A;
+  background-color: var(--color-primary);
 }
 
 .voice-timer {
@@ -262,7 +262,7 @@
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  background-color: #e0607e;
+  background-color: var(--color-pop);
   animation: voice-pulse 1s ease-in-out infinite;
 }
 
@@ -283,8 +283,8 @@
   height: auto;
   aspect-ratio: 4 / 3;
   border-radius: 12px;
-  background-color: #fff;
-  box-shadow: inset 0 0 0 1px #d6cdd2;
+  background-color: var(--color-paper);
+  box-shadow: inset 0 0 0 1px var(--color-border);
   touch-action: none; /* stop the page scrolling while drawing on touchscreens */
   cursor: crosshair;
 }
@@ -299,38 +299,38 @@
 .drawing-swatch {
   width: 32px;
   height: 32px;
-  border: 3px solid #fff;
+  border: 3px solid var(--color-paper);
   border-radius: 50%;
-  box-shadow: 0 0 0 1px #d6cdd2;
+  box-shadow: 0 0 0 1px var(--color-border);
   cursor: pointer;
 }
 
 .drawing-swatch.is-active {
-  box-shadow: 0 0 0 2px #08060d;
+  box-shadow: 0 0 0 2px var(--color-ink);
 }
 
 .drawing-divider {
   width: 1px;
   height: 24px;
   margin: 0 4px;
-  background-color: #d6cdd2;
+  background-color: var(--color-border);
 }
 
 .drawing-size,
 .drawing-clear {
-  border: 1px solid #d6cdd2;
+  border: 1px solid var(--color-border);
   border-radius: 999px;
   padding: 5px 12px;
   font: inherit;
   font-size: 13px;
-  background-color: #fff;
+  background-color: var(--color-paper);
   cursor: pointer;
 }
 
 .drawing-size.is-active {
-  background-color: #3E517A;
-  border-color: #3E517A;
-  color: #fff;
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-paper);
 }
 
 .drawing-clear {
@@ -342,7 +342,7 @@
   display: flex;
   padding: 4px;
   border-radius: 999px;
-  background-color: #e6dde2;
+  background-color: var(--color-border-soft);
 }
 
 .mode-tabs button {
@@ -357,7 +357,7 @@
 }
 
 .mode-tabs button.is-active {
-  background-color: #fff;
+  background-color: var(--color-paper);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
 }
 
@@ -370,7 +370,7 @@
   aspect-ratio: 4 / 3;
   border-radius: 16px;
   overflow: hidden;
-  background-color: #fff;
+  background-color: var(--color-paper);
 }
 
 .scratch-content {
@@ -417,13 +417,13 @@
   gap: 6px;
   padding: 24px;
   border-radius: 20px;
-  background-color: #fff;
+  background-color: var(--color-paper);
 }
 
 .why-prefix {
   font-size: 22px;
   font-weight: 500;
-  color: #3E517A;
+  color: var(--color-primary);
 }
 
 .why-input {
@@ -435,7 +435,7 @@
   font: inherit;
   font-size: 22px;
   line-height: 1.35;
-  color: #08060d;
+  color: var(--color-ink);
   background: none;
 }
 
@@ -457,12 +457,12 @@
   display: block;
   width: 100%;
   border-radius: 12px;
-  background-color: #fff;
+  background-color: var(--color-paper);
 }
 
 .viewer-link {
   align-self: flex-start;
-  color: #3E517A;
+  color: var(--color-primary);
   font-weight: 500;
 }
 

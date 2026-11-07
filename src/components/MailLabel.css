@@ -27,10 +27,10 @@
   -webkit-line-clamp: 2;
   overflow: hidden;
   overflow-wrap: anywhere;
-  font-family: 'Segoe Print', 'Bradley Hand', 'Comic Sans MS', cursive;
+  font-family: var(--font-handwriting);
   font-size: 6.2cqw;
   line-height: 11.4cqw;
-  color: #735e59;
+  color: var(--color-label-ink);
   text-align: left;
 }
 

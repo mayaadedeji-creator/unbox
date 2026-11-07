@@ -36,7 +36,7 @@
   flex-shrink: 0;
   padding-top: 12px;
   font-size: 18px;
-  color: #3E517A;
+  color: var(--color-primary);
 }
 
 /* Items rise in one after another when the box opens */
@@ -53,9 +53,9 @@
   right: 6px;
   width: 12px;
   height: 12px;
-  border: 2px solid #3E517A;
+  border: 2px solid var(--color-primary);
   border-radius: 50%;
-  background-color: #e0607e;
+  background-color: var(--color-pop);
 }
 
 .arrival-item.is-seen::after {
@@ -73,12 +73,12 @@
 
 .panel-button {
   padding: 10px 20px;
-  border: 2px solid #B7C3F3;
+  border: 2px solid var(--color-secondary);
   border-radius: 999px;
   font: inherit;
   font-size: 15px;
-  background-color: #B7C3F3;
-  color: #08060d;
+  background-color: var(--color-secondary);
+  color: var(--color-ink);
   text-align: center;
   text-decoration: none;
   cursor: pointer;
@@ -86,7 +86,7 @@
 
 .panel-button.is-secondary {
   background-color: transparent;
-  color: #fff;
+  color: var(--color-paper);
 }
 
 .panel-button:disabled {

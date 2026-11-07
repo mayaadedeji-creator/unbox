@@ -6,7 +6,7 @@
   align-items: center;
   justify-content: center;
   padding: 16px;
-  background-color: rgba(8, 6, 13, 0.45);
+  background-color: var(--color-overlay);
 }
 
 .modal {
@@ -14,12 +14,12 @@
   max-height: calc(100svh - 32px);
   display: flex;
   flex-direction: column;
-  background-color: #F5EDF0;
+  background-color: var(--color-surface);
   border-radius: 32px;
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
   overflow: hidden;
   text-align: left;
-  color: #08060d;
+  color: var(--color-ink);
 }
 
 .modal-header {
@@ -27,20 +27,20 @@
   align-items: center;
   gap: 12px;
   padding: 20px 24px;
-  background-color: #B7C3F3;
+  background-color: var(--color-secondary);
 }
 
 .modal-header h2 {
   flex: 1;
   margin: 0;
-  color: #08060d;
+  color: var(--color-ink);
 }
 
 .modal-icon {
   width: 44px;
   height: 44px;
   border-radius: 10px;
-  background-color: #fff;
+  background-color: var(--color-paper);
   object-fit: cover;
 }
 
@@ -49,15 +49,15 @@
   height: 36px;
   border: none;
   border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.6);
+  background-color: color-mix(in srgb, var(--color-paper) 60%, transparent);
   font-size: 22px;
   line-height: 1;
   cursor: pointer;
-  color: #08060d;
+  color: var(--color-ink);
 }
 
 .modal-close:hover {
-  background-color: #fff;
+  background-color: var(--color-paper);
 }
 
 .modal-body {
@@ -84,8 +84,8 @@
 }
 
 .modal-primary {
-  background-color: #3E517A;
-  color: #fff;
+  background-color: var(--color-primary);
+  color: var(--color-paper);
 }
 
 .modal-primary:disabled {
@@ -96,6 +96,6 @@
 .modal-text-button {
   margin-right: auto;
   background-color: transparent;
-  color: #3E517A;
+  color: var(--color-primary);
   text-decoration: underline;
 }
