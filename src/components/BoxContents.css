@@ -1,0 +1,48 @@
+/* Covers the open box's square. Anything below the box's front rim is cut off, so the
+   gifts look like they're standing inside the box with their tops poking out.
+   The rim runs from the left corner (8%, 51%) down to the front corner (41%, 69%)
+   and back up to the right corner (86%, 48%) of the drawing. */
+.box-contents {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  clip-path: polygon(0 0, 100% 0, 100% 47%, 86% 48%, 41% 69%, 8% 51%, 0 50%);
+}
+
+/* Each gift is just its icon, standing in the box with a soft shadow */
+.box-content {
+  --size: 21%;
+  position: absolute;
+  left: calc(var(--x) - var(--size) / 2);
+  top: calc(var(--y) - var(--size));
+  width: var(--size);
+  height: var(--size);
+  transform: rotate(var(--r));
+  transform-origin: 50% 90%;
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.18));
+}
+
+.box-content img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* A newly added gift drops in from above, then settles with a small bounce */
+.box-content.is-new {
+  animation: box-content-drop 0.9s cubic-bezier(0.3, 0, 0.4, 1) both;
+}
+
+@keyframes box-content-drop {
+  0% { opacity: 0; transform: translateY(-160%) rotate(calc(var(--r) - 25deg)); }
+  20% { opacity: 1; }
+  65% { transform: translateY(6%) rotate(var(--r)); }
+  80% { transform: translateY(-6%) rotate(var(--r)); }
+  100% { transform: translateY(0) rotate(var(--r)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .box-content.is-new {
+    animation: none;
+  }
+}

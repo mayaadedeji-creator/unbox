@@ -65,4 +65,6 @@
   --color-foil:         #c9c9d1;
   --color-foil-dark:    #b4b4bf;
   --color-foil-text:    #6b6375;
+  --color-shelf-wood:   #d9a46e;  /* the wall shelves on the fill page, close to the box's cardboard */
+  --color-shelf-edge:   #b5824f;
 }

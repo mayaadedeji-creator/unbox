@@ -1,7 +1,7 @@
 import './GiftRing.css';
 
 // A square stage with something in the middle (the box) and gifts on a slowly
-// turning ring around it. Used to fill the box and to unbox it.
+// turning ring around it. Used when the recipient unboxes their gift.
 //   gifts    — [{ id, name, image }]
 //   onPick   — called with the gift that was tapped
 //   badge    — optional (gift) => 'check' | 'dot' | null, for a marker on a gift

@@ -1,0 +1,295 @@
+/* Wall shelves of gifts. --gift is the size of each icon's square. */
+.shelves {
+  --gift: clamp(52px, 9svh, 84px);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 18px clamp(24px, 5vw, 72px);
+}
+
+/* One shelf: the gifts stand in a row on a wooden board */
+.shelf {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  gap: calc(var(--gift) * 0.2);
+  margin: 0;
+  padding: 0 calc(var(--gift) * 0.3) 12px; /* the bottom padding is the board */
+  list-style: none;
+}
+
+/* The board: a lighter top face, a darker front edge, and a soft shadow on the wall */
+.shelf::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 12px;
+  border-radius: 3px;
+  background: linear-gradient(var(--color-shelf-wood) 0 40%, var(--color-shelf-edge) 40%);
+  box-shadow: 0 8px 10px -4px rgba(0, 0, 0, 0.18);
+}
+
+/* Two small brackets holding the board up */
+.shelf::before {
+  content: '';
+  position: absolute;
+  left: 14%;
+  right: 14%;
+  bottom: -12px;
+  height: 12px;
+  background:
+    linear-gradient(to bottom right, var(--color-shelf-edge) 50%, transparent 50%) left / 12px 12px no-repeat,
+    linear-gradient(to bottom left, var(--color-shelf-edge) 50%, transparent 50%) right / 12px 12px no-repeat;
+}
+
+.shelf-slot {
+  position: relative;
+  /* Sink the square by the icon's empty space so the drawing's base meets the board */
+  margin-bottom: calc(var(--gift) * var(--empty-below) * -1);
+}
+
+.shelf-gift {
+  position: relative;
+  display: block;
+  width: var(--gift);
+  height: var(--gift);
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  transform-origin: 50% 85%;
+  transition: transform 0.2s cubic-bezier(0.3, 1.6, 0.5, 1);
+}
+
+.shelf-gift img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  /* A gentle rock from side to side, pivoting where the drawing meets the shelf */
+  transform-origin: 50% calc((1 - var(--empty-below)) * 100%);
+  animation: shelf-sway var(--sway-time, 4s) ease-in-out var(--sway-delay, 0s) infinite;
+}
+
+/* Pointing at a gift lifts it off the shelf a little */
+.shelf-gift:hover,
+.shelf-gift:focus-visible {
+  transform: translateY(-6px) scale(1.08);
+}
+
+.shelf-gift:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+/* Already in the box: the gift is faded on the shelf (and shows up inside the box) */
+.shelf-gift.is-in-box img {
+  opacity: 0.45;
+}
+
+/* The gift's name appears above it when you point at it */
+.shelf-name {
+  position: absolute;
+  bottom: calc(100% - var(--gift) * 0.1);
+  left: 50%;
+  transform: translate(-50%, 4px);
+  padding: 4px 10px;
+  border-radius: 999px;
+  background-color: var(--color-ink);
+  color: var(--color-paper);
+  font-size: 13px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s, transform 0.15s;
+  z-index: 1;
+}
+
+.shelf-gift:hover + .shelf-name,
+.shelf-gift:focus-visible + .shelf-name {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+@keyframes shelf-sway {
+  0%, 100% { transform: rotate(-1.5deg); }
+  50% { transform: rotate(1.5deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shelf-gift {
+    transition: none;
+  }
+  .shelf-gift img {
+    animation: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .shelves {
+    --gift: min(15vw, 60px);
+  }
+}
+
+/* ---------- Easter eggs ---------- */
+
+/* Easter egg scenes play above the box and the rest of the room */
+.shelves {
+  position: relative;
+  z-index: 2;
+}
+
+.shelf-slot[class*='is-egg-'] {
+  z-index: 5;
+}
+
+/* The hidden trigger: the strip of board right under the gift */
+.shelf-spot {
+  position: absolute;
+  left: -10%;
+  right: -10%;
+  bottom: calc(var(--gift) * var(--empty-below) - 14px);
+  height: 16px;
+  z-index: 1; /* above the board, which is drawn on top of the shelf's contents */
+}
+
+/* 1. Fall: the gift wobbles, teeters, tips off the shelf and lands on the floor with a
+      bounce, "oops!" appears, then it fades and pops back into its spot */
+.is-egg-fall .shelf-gift {
+  animation: egg-fall 3.4s ease-in-out both;
+}
+
+@keyframes egg-fall {
+  0% { transform: translate(0, 0) rotate(0deg) scale(1); }
+  8% { transform: translate(0, 0) rotate(-6deg) scale(1); }
+  16% { transform: translate(0, 0) rotate(5deg) scale(1); }
+  24% { transform: translate(0, 0) rotate(-9deg) scale(1); }
+  32% { transform: translate(-6px, -4px) rotate(-16deg) scale(1); }
+  38% { transform: translate(-18px, -10px) rotate(-30deg) scale(1); animation-timing-function: ease-in; }
+  56% { transform: translate(-70px, 60svh) rotate(-100deg) scale(1); animation-timing-function: ease-out; }
+  61% { transform: translate(-82px, calc(60svh - 22px)) rotate(-94deg) scale(1); animation-timing-function: ease-in; }
+  66% { transform: translate(-90px, 60svh) rotate(-92deg) scale(1); opacity: 1; }
+  82% { transform: translate(-90px, 60svh) rotate(-92deg) scale(1); opacity: 0; }
+  84% { transform: translate(0, -24px) rotate(0deg) scale(0.6); opacity: 0; }
+  100% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 1; }
+}
+
+.egg-oops {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  font-family: var(--font-handwriting);
+  font-size: 20px;
+  color: var(--color-primary);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.is-egg-fall .egg-oops {
+  animation: egg-oops 3.4s ease-out both;
+}
+
+@keyframes egg-oops {
+  0%, 60% { opacity: 0; transform: translate(-60px, calc(60svh - 30px)) rotate(-6deg) scale(0.6); }
+  66% { opacity: 1; transform: translate(-60px, calc(60svh - 40px)) rotate(-6deg) scale(1); }
+  80% { opacity: 1; transform: translate(-60px, calc(60svh - 44px)) rotate(-6deg) scale(1); }
+  88%, 100% { opacity: 0; transform: translate(-60px, calc(60svh - 50px)) rotate(-6deg) scale(1); }
+}
+
+/* 2. Pin drop: the pin hops up, spins, and drops back onto the shelf like it's marking
+      a spot, with a ripple spreading along the board */
+.is-egg-pin-drop .shelf-gift {
+  transform-origin: 50% 85%;
+  animation: egg-pin-drop 1.8s both;
+}
+
+@keyframes egg-pin-drop {
+  0% { transform: translateY(0) scale(1, 1) rotateY(0deg); animation-timing-function: ease-out; }
+  12% { transform: translateY(0) scale(1.06, 0.9) rotateY(0deg); animation-timing-function: ease-out; }
+  40% { transform: translateY(-120%) scale(1, 1) rotateY(360deg); animation-timing-function: ease-in; }
+  62% { transform: translateY(0) scale(1.12, 0.82) rotateY(360deg); animation-timing-function: ease-out; }
+  74% { transform: translateY(-8%) scale(0.96, 1.05) rotateY(360deg); }
+  86%, 100% { transform: translateY(0) scale(1, 1) rotateY(360deg); }
+}
+
+.egg-ripple {
+  position: absolute;
+  left: 50%;
+  bottom: calc(var(--gift) * var(--empty-below) - 6px);
+  width: calc(var(--gift) * 1.2);
+  height: 10px;
+  margin-left: calc(var(--gift) * -0.6);
+  border: 2px solid var(--color-pop);
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.is-egg-pin-drop .egg-ripple {
+  animation: egg-ripple 1.8s ease-out both;
+}
+
+@keyframes egg-ripple {
+  0%, 60% { opacity: 0; transform: scale(0.3); }
+  64% { opacity: 0.9; transform: scale(0.5); }
+  100% { opacity: 0; transform: scale(1.8); }
+}
+
+/* 3. Paper airplane: the letter folds away into a paper airplane, which loops around
+      the room and lands back on the shelf, turning into the letter again */
+.egg-plane {
+  position: absolute;
+  left: 50%;
+  top: 45%;
+  width: calc(var(--gift) * 0.7);
+  margin: calc(var(--gift) * -0.23) 0 0 calc(var(--gift) * -0.35);
+  fill: var(--color-paper);
+  stroke: var(--color-label-ink);
+  stroke-width: 1.6;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.15));
+  opacity: 0;
+  pointer-events: none;
+}
+
+.is-egg-airplane .shelf-gift {
+  animation: egg-letter-hide 4s ease-in-out both;
+}
+
+.is-egg-airplane .egg-plane {
+  animation: egg-letter-fly 4s ease-in-out both;
+}
+
+@keyframes egg-letter-hide {
+  0% { transform: none; opacity: 1; }
+  10% { transform: scale(0.5) rotate(12deg); opacity: 0; }
+  88% { transform: scale(0.5) rotate(-12deg); opacity: 0; }
+  100% { transform: none; opacity: 1; }
+}
+
+/* Every frame lists the same transforms so the loop's spin blends smoothly. The flight
+   is in vw so it stays on screen on phones too. */
+@keyframes egg-letter-fly {
+  0%, 6% { opacity: 0; transform: translate(0, 0) scale(0.4) rotate(-20deg); }
+  12% { opacity: 1; transform: translate(0, 0) scale(1) rotate(-20deg); }
+  26% { transform: translate(min(140px, 18vw), -40px) scale(1) rotate(-10deg); }
+  40% { transform: translate(min(300px, 40vw), 10px) scale(1) rotate(40deg); }
+  50% { transform: translate(min(330px, 44vw), 120px) scale(1) rotate(120deg); }
+  60% { transform: translate(min(220px, 30vw), 170px) scale(1) rotate(190deg); }
+  70% { transform: translate(min(120px, 16vw), 90px) scale(1) rotate(260deg); }
+  80% { transform: translate(min(60px, 8vw), 10px) scale(1) rotate(320deg); }
+  88% { opacity: 1; transform: translate(0, 0) scale(0.8) rotate(340deg); }
+  94%, 100% { opacity: 0; transform: translate(0, 0) scale(0.4) rotate(340deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shelf-slot[class*='is-egg-'] .shelf-gift,
+  .egg-oops,
+  .egg-ripple,
+  .egg-plane {
+    animation-duration: 0.01s !important;
+  }
+}
