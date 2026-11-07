@@ -6,7 +6,8 @@ import GiftWrap from './GiftWrap.jsx';
 
 // label: optional { to, from } — shows the shipping label stuck on the side of the box.
 // wrapped: draws wrapping paper, ribbon and a bow over the closed box.
-export default function BoxDisplay({ state = 'open', label, wrapped = false }) {
+// onLabelClick: optional; makes the label a button (e.g. to edit it).
+export default function BoxDisplay({ state = 'open', label, wrapped = false, onLabelClick }) {
   const image = state === 'open' ? openBox : closedBox;
 
   return (
@@ -16,7 +17,12 @@ export default function BoxDisplay({ state = 'open', label, wrapped = false }) {
         {wrapped && state === 'closed' && <GiftWrap />}
         {label && (
           <div className="box-label">
-            <MailLabel to={label.to} from={label.from} />
+            {onLabelClick ? (
+              <button className="box-label-button" onClick={onLabelClick} aria-label="Edit the label">
+                <MailLabel to={label.to} from={label.from} />              </button>
+            ) : (
+              <MailLabel to={label.to} from={label.from} />
+            )}
           </div>
         )}
       </div>

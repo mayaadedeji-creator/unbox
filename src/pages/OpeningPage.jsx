@@ -9,7 +9,7 @@ import './OpeningPage.css';
 // Long enough for "Grandma & Grandpa Johnson"; the label fits about two lines.
 const NAME_MAX = 30;
 
-// Step 1: a closed box in the middle of the room with a blank tag floating beside it.
+// Step 1: a closed box sitting low in the room with a blank tag floating to its right.
 // Tap the tag to write on it, then attach it and it lands on the box.
 export default function OpeningPage() {
   const navigate = useNavigate();
@@ -29,7 +29,11 @@ export default function OpeningPage() {
       <h1 className="sr-only">Step 1 of 4: Address your box</h1>
 
       <div className={`room-stage${justAttached ? ' just-attached' : ''}`}>
-        <BoxDisplay state="closed" label={attached ? { to, from } : null} />
+        <BoxDisplay
+          state="closed"
+          label={attached ? { to, from } : null}
+          onLabelClick={() => setEditing(true)}
+        />
 
         {!attached && !editing && (
           <button
@@ -42,20 +46,25 @@ export default function OpeningPage() {
         )}
       </div>
 
-      <div className="room-actions">
-        {attached ? (
+      {/* A handwritten note on the wall, up and to the left of the box */}
+      {!attached && (
+        <p className="room-note" hidden={editing}>
+          Tap the tag to address your gift
+        </p>
+      )}
+
+      <div className="room-actions opening-actions">
+        {attached && (
           <>
-            <button className="room-button" onClick={() => navigate('/fill-the-box')}>
-              Fill the box →
-            </button>
-            <button className="room-text-button" onClick={() => setEditing(true)}>
-              Edit the label
+            {/* Written on the wall like the hint, with a hand-drawn arrow toward the box */}
+            <button className="note-link" onClick={() => navigate('/fill-the-box')}>
+              Now fill the box
+              <svg className="note-arrow" viewBox="0 0 80 40" aria-hidden="true">
+                <path d="M4 10 C 22 4, 40 30, 66 26" />
+                <path d="M56 17 L 67 26 L 55 33" />
+              </svg>
             </button>
           </>
-        ) : (
-          <p className="room-hint" hidden={editing}>
-            Tap the tag to address your gift
-          </p>
         )}
       </div>
 

@@ -35,6 +35,31 @@
   filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.25));
 }
 
+/* Clickable version of the label (address step): lifts a little on hover */
+.box-label-button {
+  width: 66%;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.box-label-button .mail-label {
+  width: 100%;
+}
+
+.box-label-button:hover,
+.box-label-button:focus-visible {
+  transform: translateY(-2px);
+}
+
+.box-label-button:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 4px;
+  border-radius: 6px;
+}
+
 .box-frame.is-closed .box-label {
   left: 8.75%;
   top: 37.5%;
