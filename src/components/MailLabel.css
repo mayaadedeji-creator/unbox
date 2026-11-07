@@ -93,22 +93,3 @@
   pointer-events: none;
   overflow-wrap: anywhere;
 }
-
-/* A new letter lands blurry and pink, then dries into the label's ink */
-.ink-letter {
-  animation: ink-in 0.45s ease-out both;
-}
-
-@keyframes ink-in {
-  from {
-    opacity: 0;
-    filter: blur(3px);
-    color: var(--color-pop);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .ink-letter {
-    animation: none;
-  }
-}

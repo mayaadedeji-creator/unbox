@@ -4,16 +4,11 @@ import './MailLabel.css';
 // Longer names get smaller handwriting so they still fit on the label's two lines.
 const sizeClass = (text) => (text.length > 14 ? ' is-long' : '');
 
-// Each letter is its own span so new letters can "ink in" as they're typed.
-// Keyed by position, so only letters that weren't there before animate.
+// The handwriting you see while typing (the real text box above it is invisible).
 function Ink({ text }) {
   return (
     <span className="mail-label-ink" aria-hidden="true">
-      {[...text].map((char, i) => (
-        <span key={i} className="ink-letter">
-          {char}
-        </span>
-      ))}
+      {text}
     </span>
   );
 }

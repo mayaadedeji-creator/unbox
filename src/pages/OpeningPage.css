@@ -1,8 +1,97 @@
-/* The box and its floating tag, sized to fit the screen whichever side is shorter */
+/* The box and its floating tag, sized to fit the screen whichever side is shorter.
+   The auto top margin pushes it down so the box sits near the floor. */
 .room-stage {
   position: relative;
-  width: min(86vw, 62svh);
+  width: min(100%, 92svh);
   aspect-ratio: 1;
+  margin-top: auto;
+  /* The drawing has empty space under the box; nudge it down so the box rests on the floor */
+  transform: translateY(10%);
+}
+
+/* In wide windows the box sits well right of center to leave room for the note on the
+   left. The tag tucks in higher so it stays on screen and still clears the box.
+   (Narrower windows keep the box centered.) */
+@media (min-aspect-ratio: 4/3) {
+  .room-stage {
+    transform: translate(28%, 10%);
+  }
+  .room-stage .floating-tag {
+    top: -8%;
+    right: 10%;
+  }
+}
+
+/* The hint, written by hand on the wall to the left of the box.
+   Once the tag is on, the next-step buttons take its place. */
+.room-note,
+.opening-actions {
+  position: absolute;
+  top: 46%;
+  left: 8%;
+}
+
+.opening-actions {
+  min-height: 0;
+  margin: 0;
+  align-items: flex-start;
+}
+
+.room-note,
+.note-link {
+  max-width: 9em;
+  margin: 0;
+  font-family: var(--font-handwriting);
+  font-size: 24px;
+  line-height: 1.3;
+  color: var(--color-primary);
+  transform: rotate(-4deg);
+}
+
+/* "Now fill the box" — the next step, written on the wall instead of a pill button */
+.note-link {
+  display: flex;
+  flex-direction: column; /* arrow sits centered under the words */
+  align-items: center;
+  gap: 0;
+  max-width: none;
+  padding: 4px 2px;
+  border: none;
+  background: none;
+  font-size: 28px; /* a touch bigger than the hint, still smaller than the logo */
+  white-space: nowrap;
+  cursor: pointer;
+  text-decoration: underline 2px transparent;
+  text-underline-offset: 6px;
+  transition: text-decoration-color 0.2s;
+}
+
+.note-arrow {
+  width: 56px;
+  height: 28px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform 0.2s;
+}
+
+/* On hover the note gets underlined and the arrow nudges toward the box */
+.note-link:hover,
+.note-link:focus-visible {
+  text-decoration-color: currentColor;
+}
+
+.note-link:hover .note-arrow,
+.note-link:focus-visible .note-arrow {
+  transform: translateX(5px);
+}
+
+.note-link:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 4px;
+  border-radius: 6px;
 }
 
 .floating-tag {
@@ -31,16 +120,22 @@
   border-radius: 8px;
 }
 
-/* The label lands on the box with a little bounce */
+/* Sticking the label on, in three beats:
+   1. it drifts down from where the tag was floating, turning as it falls
+   2. it gets pressed flat onto the box (its shadow shrinks as it touches)
+   3. the box gives under the press, then the next-step buttons fade in */
 .room-stage.just-attached .box-label .mail-label {
-  animation: label-land 0.5s cubic-bezier(0.3, 1.6, 0.5, 1);
+  animation: label-land 1.3s cubic-bezier(0.25, 0.1, 0.25, 1) both;
 }
 
+.room-stage.just-attached .box-frame {
+  transform-origin: 50% 85%;
+  animation: box-give 0.5s ease-out 0.85s both;
+}
 
-
-
-
-
+.room-stage.just-attached ~ .opening-actions {
+  animation: actions-in 0.6s ease-out 1.3s both;
+}
 
 @keyframes tag-float {
   0%, 100% { transform: translateY(0) rotate(6deg); }
@@ -48,15 +143,48 @@
 }
 
 @keyframes label-land {
+  0% {
+    opacity: 0;
+    transform: translate(90%, -120%) scale(1.5) rotate(14deg);
+    filter: drop-shadow(0 18px 16px rgba(0, 0, 0, 0.25));
+  }
+  20% {
+    opacity: 1;
+  }
+  55% {
+    transform: translate(12%, -18%) scale(1.15) rotate(-5deg);
+    filter: drop-shadow(0 10px 10px rgba(0, 0, 0, 0.22));
+  }
+  72% {
+    transform: translate(0, 0) scale(0.95) rotate(1deg);
+    filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.3));
+  }
+  86% {
+    transform: scale(1.02) rotate(0deg);
+  }
+  100% {
+    transform: none;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.25));
+  }
+}
+
+@keyframes box-give {
+  0%, 100% { transform: none; }
+  35% { transform: scale(1.015, 0.985); }
+}
+
+@keyframes actions-in {
   from {
     opacity: 0;
-    transform: scale(1.8) rotate(-8deg);
+    transform: translateY(8px);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .floating-tag,
-  .room-stage.just-attached .box-label .mail-label {
+  .room-stage.just-attached .box-label .mail-label,
+  .room-stage.just-attached .box-frame,
+  .room-stage.just-attached ~ .opening-actions {
     animation: none;
   }
   .floating-tag {
@@ -69,5 +197,12 @@
   .floating-tag {
     top: -6%;
     right: 0;
+  }
+  /* Keep the note and buttons just above the box instead of far up the wall */
+  .room-note,
+  .opening-actions {
+    top: auto;
+    bottom: 100vw;
+    left: 20px;
   }
 }
