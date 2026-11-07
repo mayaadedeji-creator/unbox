@@ -3,10 +3,23 @@ import { useNavigate } from 'react-router-dom';
 import { usePackage } from '../context/PackageContext';
 import BoxDisplay from '../components/BoxDisplay.jsx';
 import ActivityEditor from '../components/ActivityEditor.jsx';
-import GiftRing from '../components/GiftRing.jsx';
+import GiftShelf from '../components/GiftShelf.jsx';
 import { catalog } from '../features/catalog.js';
+import './FillTheBoxPage.css';
 
-// Step 2: the open box in the middle of the room with every gift circling it.
+// The order the gifts sit on the shelves (5 per shelf). Letter and Map Pin are on the
+// second shelf so each shelf has an easter egg.
+const SHELF_ORDER = [
+  'scratch-off', 'song', 'photo', 'voice-memo', 'affirmation',
+  'letter', 'why', 'drawing', 'map-pin', 'recommendation',
+];
+const shelfGifts = SHELF_ORDER.map((id) => catalog.find((g) => g.id === id)).filter(Boolean);
+
+// Easter eggs: click the shelf board right under one of these gifts.
+// (Map Pin and Letter are both on the second shelf for now, to pick one.)
+const EGGS = { photo: 'fall', 'map-pin': 'pin-drop', letter: 'airplane' };
+
+// Step 2: the open box low in the room, with the gifts waiting on shelves on the wall.
 // Tap a gift to bring it forward and make it; "Add to box" drops it in.
 export default function FillTheBoxPage() {
   const navigate = useNavigate();
@@ -15,7 +28,8 @@ export default function FillTheBoxPage() {
 
   const existing = activeItem && items.find((i) => i.id === activeItem.id);
   const closeActivity = () => setActiveItem(null);
-  const count = items.length;
+  // The gifts already added, with their icons, in the order they went in
+  const inTheBox = items.map((it) => catalog.find((g) => g.id === it.id)).filter(Boolean);
 
   return (
     <>
@@ -25,27 +39,26 @@ export default function FillTheBoxPage() {
         ← Label
       </button>
 
-      <GiftRing
-        gifts={catalog}
+      <GiftShelf
+        gifts={shelfGifts}
+        eggs={EGGS}
         onPick={setActiveItem}
-        badge={(gift) => (items.some((it) => it.id === gift.id) ? 'check' : null)}
+        isInBox={(gift) => items.some((it) => it.id === gift.id)}
         label="Gifts you can add"
-      >
-        <BoxDisplay state="open" label={{ to, from }} />
-      </GiftRing>
+      />
 
-      <div className="room-actions">
-        {count > 0 ? (
-          <>
-            <p className="room-hint">
-              {count} {count === 1 ? 'thing' : 'things'} in your box
-            </p>
-            <button className="room-button" onClick={() => navigate('/preview')}>
-              Close it up →
-            </button>
-          </>
-        ) : (
-          <p className="room-hint">Tap a gift to add it to your box</p>
+      <div className="fill-stage">
+        <BoxDisplay state="open" label={{ to, from }} contents={inTheBox} />
+      </div>
+
+      {/* A handwritten note on the wall, in the corner */}
+      <p className="fill-note">Tap a gift to add it to your box</p>
+
+      <div className="room-actions fill-actions">
+        {items.length > 0 && (
+          <button className="room-button" onClick={() => navigate('/preview')}>
+            Close it up →
+          </button>
         )}
       </div>
 

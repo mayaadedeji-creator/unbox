@@ -1,0 +1,62 @@
+/* The shelves hang along the top of the wall, clear of the wordmark and back link */
+.room > .shelves {
+  margin-top: 104px;
+}
+
+/* The open box sits low in the room, a bit smaller than on the address page.
+   The auto top margin pushes it to the floor; the small nudge down makes up for the
+   empty space under the box in the drawing. */
+.fill-stage {
+  width: min(100%, 75svh);
+  aspect-ratio: 1;
+  margin-top: auto;
+  flex-shrink: 0;
+  transform: translateY(5%);
+}
+
+/* ---------- Note and buttons ---------- */
+
+/* The hint, written by hand on the wall in the bottom left (same style as the address page) */
+.fill-note {
+  position: absolute;
+  bottom: 6%;
+  left: 4%;
+  max-width: 8em;
+  margin: 0;
+  font-family: var(--font-handwriting);
+  font-size: 24px;
+  line-height: 1.3;
+  color: var(--color-primary);
+  transform: rotate(-4deg);
+}
+
+/* "Close it up" waits in the bottom right corner */
+.fill-actions {
+  position: absolute;
+  right: 4%;
+  bottom: 5%;
+  min-height: 0;
+  margin: 0;
+}
+
+/* Tall screens: the box fills the bottom, so the note moves up between the shelves
+   and the box */
+@media not all and (min-aspect-ratio: 1/1) {
+  .fill-note {
+    position: static;
+    order: 1;
+    max-width: none;
+    margin-top: 28px;
+    text-align: center;
+    transform: rotate(-3deg);
+  }
+  .fill-stage {
+    order: 2;
+  }
+}
+
+@media (max-width: 600px) {
+  .fill-note {
+    font-size: 20px;
+  }
+}
