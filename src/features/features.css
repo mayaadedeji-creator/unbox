@@ -157,6 +157,68 @@
   max-height: 360px;
 }
 
+/* ---------- Song ---------- */
+.song-results {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-radius: 12px;
+  background-color: var(--color-paper);
+  overflow: hidden;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.song-results button {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 8px 12px;
+  border: none;
+  border-bottom: 1px solid var(--color-border-soft);
+  background: none;
+  font: inherit;
+  text-align: left;
+  color: var(--color-ink);
+  cursor: pointer;
+}
+
+.song-results button:hover {
+  background-color: var(--color-secondary-soft);
+}
+
+.song-results img,
+.song-results-blank {
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  background-color: var(--color-border-soft);
+}
+
+.song-results-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.song-results-title,
+.song-results-artist {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.song-results-title {
+  font-size: 15px;
+}
+
+.song-results-artist {
+  font-size: 13px;
+  color: var(--color-ink-soft);
+}
+
 /* ---------- Map pin ---------- */
 .map-results {
   margin: 0;
