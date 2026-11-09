@@ -6,6 +6,7 @@ import FillTheBoxPage from './pages/FillTheBoxPage';
 import PreviewPage from './pages/PreviewPage';
 import SharePage from './pages/SharePage';
 import GiftPage from './pages/GiftPage';
+import HomePage from './pages/HomePage';
 
 function App() {
   return (
@@ -18,6 +19,10 @@ function App() {
             <Route path="/fill-the-box" element={<FillTheBoxPage />} />
             <Route path="/preview" element={<PreviewPage />} />
             <Route path="/share/:id" element={<SharePage />} />
+
+            {/* The homepage, reached from the unbox wordmark (the main address still
+                goes straight to making a gift) */}
+            <Route path="/home" element={<HomePage />} />
 
             {/* What the recipient opens from the link */}
             <Route path="/gift/:id" element={<GiftPage />} />

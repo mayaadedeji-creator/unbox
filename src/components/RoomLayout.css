@@ -19,6 +19,14 @@
   font-family: var(--font-handwriting);
   font-size: 32px;
   color: var(--color-primary);
+  text-decoration: none;
+  z-index: 3; /* stays clickable above the shelves and notes */
+}
+
+.room-wordmark:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 4px;
+  border-radius: 6px;
 }
 
 /* Shared by every room page */
