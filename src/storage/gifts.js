@@ -32,7 +32,33 @@ export async function saveGift({ to, from, items }) {
   };
   if (savesOnline) await (await online()).saveOnlineGift(id, gift);
   else await saveLocalGift(id, gift);
+  rememberMadeHere(id);
   return id;
+}
+
+// This browser keeps a list of the gifts that were made in it. When the maker opens
+// their own link, the gift page uses this to treat it like a preview: nothing they open
+// is remembered, so it doesn't count as the gift being unwrapped.
+const MADE_HERE_KEY = 'gifts-made-here';
+
+function madeHereIds() {
+  try {
+    return JSON.parse(localStorage.getItem(MADE_HERE_KEY)) || [];
+  } catch {
+    return []; // Storage unavailable (e.g. private mode)
+  }
+}
+
+function rememberMadeHere(id) {
+  try {
+    localStorage.setItem(MADE_HERE_KEY, JSON.stringify([...madeHereIds(), id]));
+  } catch {
+    // Not being able to remember this just means the maker's views count like anyone's.
+  }
+}
+
+export function wasMadeHere(id) {
+  return madeHereIds().includes(id);
 }
 
 // Returns { to, from, items } with each item's name and icon filled back in, or null.

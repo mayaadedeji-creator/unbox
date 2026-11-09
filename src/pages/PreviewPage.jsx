@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { usePackage } from '../context/PackageContext';
 import Unboxing from '../components/Unboxing.jsx';
 import { saveGift } from '../storage/gifts.js';
+import './PreviewPage.css';
 
 // Step 3: the maker sees the gift exactly as the recipient will.
 // Nothing here is remembered — it resets every time, so it never "uses up" the gift.
@@ -35,11 +36,13 @@ export default function PreviewPage() {
         ← Keep editing
       </button>
 
-      <p className="room-caption">
+      {/* A small handwritten aside up in the corner */}
+      <p className="preview-note">
         Preview: this is what {to || 'they'} will see. Opening things here won't spoil it.
       </p>
 
       <Unboxing
+        wrapped={false}
         gift={{ to, from, items }}
         opened={opened}
         onOpen={() => setOpened(true)}
@@ -47,8 +50,12 @@ export default function PreviewPage() {
         onSee={(id) => setSeen((prev) => new Set(prev).add(id))}
         actions={
           <>
-            <button className="room-button" onClick={wrap} disabled={saving || items.length === 0}>
-              {saving ? 'Wrapping it up…' : 'Wrap it up →'}
+            <button className="unbox-next" onClick={wrap} disabled={saving || items.length === 0}>
+              {saving ? 'Wrapping it up…' : 'Wrap it up'}
+              <svg viewBox="0 0 80 40" aria-hidden="true">
+                <path d="M4 10 C 22 4, 40 30, 66 26" />
+                <path d="M56 17 L 67 26 L 55 33" />
+              </svg>
             </button>
             {error && <p className="room-error">{error}</p>}
           </>

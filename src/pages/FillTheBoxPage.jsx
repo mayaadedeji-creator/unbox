@@ -2,10 +2,15 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { usePackage } from '../context/PackageContext';
 import BoxDisplay from '../components/BoxDisplay.jsx';
+import BoxContents from '../components/BoxContents.jsx';
 import ActivityEditor from '../components/ActivityEditor.jsx';
 import GiftShelf from '../components/GiftShelf.jsx';
 import { catalog } from '../features/catalog.js';
 import './FillTheBoxPage.css';
+
+// "Close it up": when the box shuts and when the preview opens (ms), matching the
+// animations in FillTheBoxPage.css and BoxContents.css
+const CLOSE_TIMING = { shut: 550, leave: 1210 };
 
 // The order the gifts sit on the shelves (5 per shelf). Letter and Map Pin are on the
 // second shelf so each shelf has an easter egg.
@@ -25,6 +30,21 @@ export default function FillTheBoxPage() {
   const navigate = useNavigate();
   const { items, saveItem, removeItem, to, from } = usePackage();
   const [activeItem, setActiveItem] = useState(null);
+  // Closing up on the way to the preview: 'sinking' (gifts go down into the box and the
+  // room fades), then 'closed' (the box shuts with a bounce), then the preview opens.
+  const [closing, setClosing] = useState(null);
+  const leaving = closing ? ' is-leaving' : '';
+
+  const closeItUp = () => {
+    if (closing) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      navigate('/preview');
+      return;
+    }
+    setClosing('sinking');
+    setTimeout(() => setClosing('closed'), CLOSE_TIMING.shut);
+    setTimeout(() => navigate('/preview'), CLOSE_TIMING.leave);
+  };
 
   const existing = activeItem && items.find((i) => i.id === activeItem.id);
   const closeActivity = () => setActiveItem(null);
@@ -35,11 +55,12 @@ export default function FillTheBoxPage() {
     <>
       <h1 className="sr-only">Step 2 of 4: Fill your box</h1>
 
-      <button className="room-back" onClick={() => navigate('/')}>
+      <button className={`room-back${leaving}`} onClick={() => navigate('/')}>
         ← Label
       </button>
 
       <GiftShelf
+        className={leaving.trim()}
         gifts={shelfGifts}
         eggs={EGGS}
         onPick={setActiveItem}
@@ -47,16 +68,27 @@ export default function FillTheBoxPage() {
         label="Gifts you can add"
       />
 
-      <div className="fill-stage">
-        <BoxDisplay state="open" label={{ to, from }} contents={inTheBox} />
+      <div className={`fill-stage${closing === 'closed' ? ' is-shut' : ''}`}>
+        {/* When it shuts, the closed box fades in underneath while the open one fades
+            out on top, so the flaps melt shut instead of snapping */}
+        {closing === 'closed' && (
+          <div key="closed" className="fill-box-layer is-fading-in">
+            <BoxDisplay state="closed" label={{ to, from }} />
+          </div>
+        )}
+        <div key="open" className={`fill-box-layer${closing === 'closed' ? ' is-fading-out' : ''}`}>
+          <BoxDisplay state="open" label={{ to, from }}>
+            <BoxContents gifts={inTheBox} sink={closing !== null} />
+          </BoxDisplay>
+        </div>
       </div>
 
       {/* A handwritten note on the wall, in the corner */}
-      <p className="fill-note">Tap a gift to add it to your box</p>
+      <p className={`fill-note${leaving}`}>Tap a gift to add it to your box</p>
 
-      <div className="room-actions fill-actions">
+      <div className={`room-actions fill-actions${leaving}`}>
         {items.length > 0 && (
-          <button className="room-button" onClick={() => navigate('/preview')}>
+          <button className="room-button" onClick={closeItUp}>
             Close it up →
           </button>
         )}

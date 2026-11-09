@@ -41,8 +41,75 @@
   100% { transform: translateY(0) rotate(var(--r)); }
 }
 
+/* ---------- Tappable gifts (unboxing) ---------- */
+
+.box-content.is-pickable {
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  /* Only the middle of the square (where the drawing is) can be clicked, so the empty
+     margins around a gift in front don't block the gifts behind it */
+  pointer-events: none;
+  transition: transform 0.2s cubic-bezier(0.3, 1.6, 0.5, 1);
+}
+
+.box-content.is-pickable::after {
+  content: '';
+  position: absolute;
+  inset: 18%;
+  pointer-events: auto;
+}
+
+/* Pointing at a gift lifts it a little out of the box */
+.box-content.is-pickable:hover,
+.box-content.is-pickable:focus-visible {
+  transform: translateY(-10%) rotate(var(--r)) scale(1.06);
+}
+
+.box-content.is-pickable:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: 10px;
+}
+
+/* Not opened yet: a small pink dot */
+.box-content-dot {
+  position: absolute;
+  top: 6%;
+  right: 6%;
+  width: 16%;
+  height: 16%;
+  border: 2px solid var(--color-paper);
+  border-radius: 50%;
+  background-color: var(--color-pop);
+}
+
+/* When the box is opened, the gifts rise up out of it one after another */
+.box-contents.is-popping .box-content {
+  /* "backwards" (not "both") so the hover lift still works once it has popped up */
+  animation: box-content-pop 0.6s cubic-bezier(0.3, 1.5, 0.5, 1) calc(0.35s + var(--order) * 0.12s) backwards;
+}
+
+/* When the box is being closed, the gifts sink down into it one after another */
+.box-contents.is-sinking .box-content {
+  /* the stagger is capped so even a full box is done before it shuts (0.55s) */
+  animation: box-content-sink 0.385s ease-in calc(min(var(--order), 3) * 0.044s) both;
+}
+
+@keyframes box-content-sink {
+  to { transform: translateY(90%) rotate(var(--r)); }
+}
+
+@keyframes box-content-pop {
+  from { transform: translateY(80%) rotate(0deg); }
+  to { transform: translateY(0) rotate(var(--r)); }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .box-content.is-new {
+  .box-content.is-new,
+  .box-contents.is-popping .box-content,
+  .box-contents.is-sinking .box-content {
     animation: none;
   }
 }

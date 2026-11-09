@@ -19,30 +19,54 @@ const SPOTS = [
 ];
 
 // The gifts that are in the open box, sticking up out of it. Goes inside BoxDisplay's
-// square frame. Gifts added after the box first appears drop in from above.
-//   gifts — [{ id, image }] in the order they were added
-export default function BoxContents({ gifts }) {
-  // Gifts that were already in the box when it first showed up don't animate in
+// square frame.
+//   gifts   — [{ id, name, image }] in the order they were added
+//   onPick  — optional; makes each gift a button you can tap (for unboxing)
+//   isNew   — optional (gift) => true for gifts not opened yet; they get a pink dot
+//   popUp   — the gifts rise up out of the box one after another (when it's just opened)
+//   sink    — the gifts sink down into the box one after another (when it's being closed)
+// Without popUp, gifts added after the box first appears drop in from above.
+export default function BoxContents({ gifts, onPick, isNew, popUp = false, sink = false }) {
+  // Gifts that were already in the box when it first showed up don't drop in
   const [startingIds] = useState(() => new Set(gifts.map((g) => g.id)));
 
   return (
-    <div className="box-contents" aria-hidden="true">
+    <div
+      className={`box-contents${popUp ? ' is-popping' : ''}${sink ? ' is-sinking' : ''}`}
+      aria-hidden={onPick ? undefined : true}
+    >
       {gifts.slice(0, SPOTS.length).map((gift, i) => {
         const spot = SPOTS[i];
+        const unopened = isNew?.(gift);
+        const style = {
+          '--x': `${spot.x}%`,
+          '--y': `${spot.y}%`,
+          '--r': `${spot.r}deg`,
+          '--order': i,
+          // Front gifts (lower base) cover the ones behind them
+          zIndex: Math.round(spot.y),
+        };
+        const dropping = !popUp && !startingIds.has(gift.id);
+        const className = `box-content${dropping ? ' is-new' : ''}${unopened ? ' is-unopened' : ''}`;
+
+        if (!onPick) {
+          return (
+            <span key={gift.id} className={className} style={style}>
+              <img src={gift.image} alt="" />
+            </span>
+          );
+        }
         return (
-          <span
+          <button
             key={gift.id}
-            className={`box-content${startingIds.has(gift.id) ? '' : ' is-new'}`}
-            style={{
-              '--x': `${spot.x}%`,
-              '--y': `${spot.y}%`,
-              '--r': `${spot.r}deg`,
-              // Front gifts (lower base) cover the ones behind them
-              zIndex: Math.round(spot.y),
-            }}
+            className={`${className} is-pickable`}
+            style={style}
+            onClick={() => onPick(gift)}
+            aria-label={unopened ? `${gift.name} (not opened yet)` : gift.name}
           >
             <img src={gift.image} alt="" />
-          </span>
+            {unopened && <span className="box-content-dot" aria-hidden="true" />}
+          </button>
         );
       })}
     </div>
