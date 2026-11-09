@@ -1,0 +1,73 @@
+/* The homepage: an empty wall for now, with the way into making a gift in the middle */
+.home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin: auto;
+}
+
+/* "Make a gift →": written on the wall with a hand-drawn arrow under it, like the
+   next-step notes on the other pages (still smaller than the wordmark) */
+.home-start {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4px 2px;
+  border: none;
+  background: none;
+  font-family: var(--font-handwriting);
+  font-size: 30px;
+  line-height: 1.3;
+  color: var(--color-primary);
+  cursor: pointer;
+  transform: rotate(-3deg);
+  text-decoration: underline 2px transparent;
+  text-underline-offset: 6px;
+  transition: text-decoration-color 0.2s;
+}
+
+.home-start svg {
+  width: 60px;
+  height: 30px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform 0.2s;
+}
+
+.home-start:hover,
+.home-start:focus-visible {
+  text-decoration-color: currentColor;
+}
+
+.home-start:hover svg,
+.home-start:focus-visible svg {
+  transform: translateX(5px);
+}
+
+.home-start:focus-visible,
+.home-new:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 4px;
+  border-radius: 6px;
+}
+
+/* "or start a new one": small and quiet under "Continue your gift" */
+.home-new {
+  padding: 2px 4px;
+  border: none;
+  background: none;
+  font-family: var(--font-handwriting);
+  font-size: 16px;
+  color: var(--color-ink-soft);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  cursor: pointer;
+}
+
+.home-new:hover {
+  color: var(--color-primary);
+}
