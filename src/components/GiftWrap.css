@@ -11,10 +11,6 @@
 .wrap-face.is-left { fill: var(--color-wrap-shade); }
 .wrap-face.is-right { fill: var(--color-wrap-dark); }
 
-.wrap-dot {
-  fill: color-mix(in srgb, var(--color-paper) 45%, transparent);
-}
-
 .wrap-ribbon {
   fill: var(--color-ribbon);
 }
@@ -59,9 +55,71 @@
   }
 }
 
+/* Already wrapped: everything just sits there */
+.gift-wrap.is-still .wrap-piece,
+.gift-wrap.is-still .wrap-bow {
+  animation: none;
+}
+
+/* ---------- Unwrapping (the recipient opening it) ----------
+   1. the bow pops up and flies off
+   2. the ribbon strips roll back up, one after another
+   3. the paper comes away: the lid lifts off, then the sides fall outward
+   Unboxing.jsx waits for this (about 1.9s) before opening the box. */
+.gift-wrap.is-unwrap .wrap-bow {
+  animation: unwrap-bow 0.6s ease-in both;
+}
+
+.gift-wrap.is-unwrap .wrap-ribbon.wrap-piece {
+  animation: unwrap-ribbon 0.35s ease-in both;
+  animation-delay: calc(0.35s + (var(--step) - 3) * 0.08s);
+}
+
+.gift-wrap.is-unwrap .wrap-paper {
+  animation: unwrap-paper 0.7s ease-in both;
+}
+
+.gift-wrap.is-unwrap .wrap-paper:nth-child(1) {
+  --away: translate(0, -45%) rotate(-10deg);
+  animation-delay: 0.9s;
+}
+
+.gift-wrap.is-unwrap .wrap-paper:nth-child(2) {
+  --away: translate(-35%, 25%) rotate(-16deg);
+  transform-origin: 0% 100%;
+  animation-delay: 1.05s;
+}
+
+.gift-wrap.is-unwrap .wrap-paper:nth-child(3) {
+  --away: translate(35%, 25%) rotate(16deg);
+  transform-origin: 100% 100%;
+  animation-delay: 1.15s;
+}
+
+@keyframes unwrap-bow {
+  0% { transform: none; opacity: 1; }
+  30% { transform: translateY(-20%) scale(1.12) rotate(-6deg); opacity: 1; }
+  100% { transform: translateY(-260%) scale(0.6) rotate(40deg); opacity: 0; }
+}
+
+@keyframes unwrap-ribbon {
+  from { clip-path: inset(0 0 0 0); }
+  to { clip-path: inset(0 0 100% 0); }
+}
+
+@keyframes unwrap-paper {
+  0% { transform: none; opacity: 1; }
+  25% { transform: translate(0, -2%) rotate(0deg); opacity: 1; }
+  100% { transform: var(--away); opacity: 0; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .wrap-piece,
   .wrap-bow {
-    animation: none;
+    animation: none !important;
+  }
+  /* Without motion, the wrapping just disappears */
+  .gift-wrap.is-unwrap {
+    opacity: 0;
   }
 }

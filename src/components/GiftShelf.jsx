@@ -30,7 +30,7 @@ const LINGER_MS = 1500;
 //   eggs      — optional { [gift id]: 'fall' | 'pin-drop' | 'airplane' }. Easter eggs:
 //               resting the mouse on that gift for a moment (or clicking the shelf board
 //               right under it) plays a little scene.
-export default function GiftShelf({ gifts, onPick, isInBox, label, perShelf = 5, eggs = {} }) {
+export default function GiftShelf({ gifts, onPick, isInBox, label, perShelf = 5, eggs = {}, className = '' }) {
   const [playing, setPlaying] = useState(null); // id of the gift whose egg is running
   const hoverTimer = useRef(null);
 
@@ -57,7 +57,7 @@ export default function GiftShelf({ gifts, onPick, isInBox, label, perShelf = 5,
   for (let i = 0; i < gifts.length; i += perShelf) shelves.push(gifts.slice(i, i + perShelf));
 
   return (
-    <div className="shelves" role="group" aria-label={label}>
+    <div className={`shelves ${className}`.trim()} role="group" aria-label={label}>
       {shelves.map((row, s) => (
         <ul key={s} className="shelf">
           {row.map((gift, i) => {

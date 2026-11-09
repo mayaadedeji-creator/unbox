@@ -3,6 +3,18 @@
   margin-top: 104px;
 }
 
+/* Wide screens: the shelves hang on the wall without pushing the box down, so the box
+   sits in exactly the same spot as on the preview page (no jump between the steps) */
+@media (min-aspect-ratio: 1/1) {
+  .room > .shelves {
+    position: absolute;
+    top: 104px;
+    left: 0;
+    right: 0;
+    margin-top: 0;
+  }
+}
+
 /* The open box sits low in the room, a bit smaller than on the address page.
    The auto top margin pushes it to the floor; the small nudge down makes up for the
    empty space under the box in the drawing. */
@@ -11,7 +23,15 @@
   aspect-ratio: 1;
   margin-top: auto;
   flex-shrink: 0;
+  position: relative;
   transform: translateY(5%);
+}
+
+/* The box drawing fills the stage. While it shuts there are two stacked (open and
+   closed) so they can crossfade. */
+.fill-box-layer {
+  position: absolute;
+  inset: 0;
 }
 
 /* ---------- Note and buttons ---------- */
@@ -58,5 +78,55 @@
 @media (max-width: 600px) {
   .fill-note {
     font-size: 20px;
+  }
+}
+
+/* ---------- "Close it up" ---------- */
+
+/* The shelves, note, button and back link fade away while the box closes */
+.shelves.is-leaving,
+.fill-note.is-leaving,
+.fill-actions.is-leaving,
+.room-back.is-leaving {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.44s ease-out;
+}
+
+/* The box shuts: it squashes down as the flaps close, then bounces back up closed */
+.fill-stage.is-shut .box-frame {
+  transform-origin: 50% 80%;
+  animation: box-shut 0.55s cubic-bezier(0.3, 1.4, 0.5, 1) both;
+}
+
+/* The crossfade: the open box fades out over the first part of the squash while the
+   closed box fades in underneath it */
+.fill-box-layer.is-fading-out {
+  animation: box-fade-out 0.28s ease-in-out both;
+}
+
+.fill-box-layer.is-fading-in {
+  animation: box-fade-in 0.28s ease-in-out both;
+}
+
+@keyframes box-fade-out {
+  to { opacity: 0; }
+}
+
+@keyframes box-fade-in {
+  from { opacity: 0; }
+}
+
+@keyframes box-shut {
+  0% { transform: scale(1.04, 0.86); }
+  55% { transform: scale(0.98, 1.04); }
+  100% { transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fill-box-layer.is-fading-out,
+  .fill-box-layer.is-fading-in,
+  .fill-stage.is-shut .box-frame {
+    animation: none;
   }
 }

@@ -1,0 +1,39 @@
+/* "Preview: this is what Sam will see…": a small handwritten aside in the top right,
+   clear of the wordmark and the back link */
+.preview-note {
+  position: absolute;
+  top: 13%;
+  right: 5%;
+  max-width: 15em;
+  margin: 0;
+  font-family: var(--font-handwriting);
+  font-size: 17px;
+  line-height: 1.35;
+  color: var(--color-ink-soft);
+  text-align: right;
+  transform: rotate(2deg);
+}
+
+/* Tall screens: it joins the column above the box, under the back link */
+@media not all and (min-aspect-ratio: 4/3) {
+  .preview-note {
+    position: static;
+    order: -2;
+    max-width: 20em;
+    margin-top: 92px;
+    font-size: 15px;
+    text-align: center;
+    transform: rotate(-1deg);
+  }
+}
+
+/* Fades in with the rest of the writing when you arrive from the fill page */
+.preview-note {
+  animation: unbox-writing-in 0.5s ease-out 0.15s both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .preview-note {
+    animation: none;
+  }
+}

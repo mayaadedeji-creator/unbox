@@ -1,4 +1,3 @@
-import { useId } from 'react';
 import './GiftWrap.css';
 
 // Wrapping paper, ribbon and a bow drawn over closed-box.svg.
@@ -19,23 +18,17 @@ const RIBBON = [
   { side: [[900, 731], [978, 687], [978, 1112], [900, 1156]], lid: [[900, 731], [978, 687], [438, 382], [360, 426]] },
 ];
 
-export default function GiftWrap() {
-  const dots = useId();
-
+// mode:
+//   'wrap'   — wraps itself up in front of you (the share page)
+//   'still'  — already wrapped, no animation (the recipient's box, waiting to be opened)
+//   'unwrap' — comes off: the bow flies away, the ribbon rolls back, the paper falls away
+export default function GiftWrap({ mode = 'wrap' }) {
   return (
-    <svg className="gift-wrap" viewBox="0 0 1500 1500" aria-hidden="true">
-      <defs>
-        <pattern id={dots} width="70" height="70" patternUnits="userSpaceOnUse">
-          <circle cx="18" cy="18" r="8" className="wrap-dot" />
-          <circle cx="53" cy="53" r="8" className="wrap-dot" />
-        </pattern>
-      </defs>
-
-      {/* Paper: lid first, then the two sides */}
+    <svg className={`gift-wrap is-${mode}`} viewBox="0 0 1500 1500" aria-hidden="true">
+      {/* Paper: plain, shaded per side. Lid first, then the two sides */}
       {Object.entries(FACES).map(([face, points], i) => (
         <g key={face} className="wrap-piece wrap-paper" style={{ '--step': i }}>
           <polygon points={pts(points)} className={`wrap-face is-${face}`} />
-          <polygon points={pts(points)} fill={`url(#${dots})`} />
         </g>
       ))}
 

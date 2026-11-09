@@ -1,0 +1,63 @@
+/* "A package from Maya": handwritten at the top of the wall, like the notes on the
+   maker's pages (still smaller than the wordmark) */
+.gift-title {
+  margin: 56px 0 0;
+  font-family: var(--font-handwriting);
+  font-size: 30px;
+  font-weight: normal;
+  letter-spacing: normal;
+  color: var(--color-primary);
+  transform: rotate(-2deg);
+}
+
+.gift-caption {
+  max-width: 28em;
+  margin: 12px 0 20px;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--color-ink-soft);
+}
+
+.gift-loading {
+  margin: auto;
+  font-family: var(--font-handwriting);
+  font-size: 22px;
+  color: var(--color-primary);
+}
+
+/* Tall screens: the title stays first, above the hint and buttons */
+@media not all and (min-aspect-ratio: 4/3) {
+  .gift-title {
+    order: -2;
+    margin-top: 60px;
+    font-size: 26px;
+  }
+}
+
+/* "You made this gift…": a small handwritten aside for the maker, in the same style
+   and spot as the note on the preview page */
+.gift-maker-note {
+  position: absolute;
+  top: 13%;
+  right: 5%;
+  max-width: 15em;
+  margin: 0;
+  font-family: var(--font-handwriting);
+  font-size: 17px;
+  line-height: 1.35;
+  color: var(--color-ink-soft);
+  text-align: right;
+  transform: rotate(2deg);
+}
+
+@media not all and (min-aspect-ratio: 4/3) {
+  .gift-maker-note {
+    position: static;
+    order: -2;
+    max-width: 20em;
+    margin-top: 10px;
+    font-size: 15px;
+    text-align: center;
+    transform: rotate(-1deg);
+  }
+}
