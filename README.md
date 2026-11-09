@@ -37,7 +37,7 @@ a gift of their own.
 | Item | What the maker does | What the recipient gets |
 |---|---|---|
 | Letter | Types on lined notepaper (up to 1,500 characters) | The letter on paper |
-| Song | Pastes a Spotify link | A playable Spotify player |
+| Song | Searches for a song by name (or pastes a Spotify link) | A playable Spotify player |
 | Photo | Uploads a JPG or PNG | The photo |
 | Map Pin | Searches for a place | A map with a pin, plus "Open in Google Maps" |
 | Affirmation | Shuffles affirmations from the API until one fits | The chosen affirmation card |
@@ -66,6 +66,9 @@ a gift of their own.
   finished.
 - **[OpenStreetMap Nominatim](https://nominatim.org/)** powers the Map Pin place search, and
   OpenStreetMap draws the map.
+- **[Spotify Web API](https://developer.spotify.com/documentation/web-api)** powers the song
+  search. The browser calls a Vercel function (`api/song-search.js`), which holds the Spotify app
+  secret and asks Spotify's search endpoint, so the secret never reaches the browser.
 - **Spotify embeds** play the shared song.
 
 ## Running it locally
@@ -86,6 +89,10 @@ Optional settings go in `.env.local` (copy `.env.example`):
 - **Sharing across devices:** a [Supabase](https://supabase.com) project URL and publishable key.
   Run `supabase/setup.sql` once in the project's SQL Editor first. Without these, gifts are saved
   in your browser only, so links open just on that computer.
+- **Song search:** a client ID and secret from the
+  [Spotify developer dashboard](https://developer.spotify.com/dashboard). The search runs in a
+  Vercel function; `npm run dev` runs it locally too (see `vite.config.js`).
+  Without these, songs can still be added by pasting a Spotify link.
 
 ## Known limitations
 
@@ -99,7 +106,6 @@ Optional settings go in `.env.local` (copy `.env.example`):
 ## What I would improve next
 
 - Tracking mechanism to let makers see when their gift has been opened
-- Search for songs by name instead of pasting a link
 - A layout designed specifically for phones
 - More branding/design integration
 - Making the experience more customizable, with businesses in mind.  
