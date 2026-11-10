@@ -2,6 +2,7 @@
 // Each gets { value } — the same data the matching editor saved.
 import { SpotifyEmbed } from './SongEditor.jsx';
 import { MapEmbed } from './MapPinEditor.jsx';
+import { placeName, googleMapsUrl } from './places.js';
 import ScratchReveal from './ScratchReveal.jsx';
 import { ScratchContent } from './ScratchOffEditor.jsx';
 import { AffirmationCard, AffirmationCredit } from './AffirmationCard.jsx';
@@ -24,17 +25,17 @@ export function PhotoViewer({ value }) {
 }
 
 export function MapPinViewer({ value }) {
-  const { label, lat, lon } = value.place;
+  const { place, note } = value;
+  const href = googleMapsUrl(place);
   return (
     <div className="feature-stack">
-      <p className="map-chosen">📍 {label}</p>
-      <MapEmbed lat={lat} lon={lon} />
-      <a
-        className="viewer-link"
-        href={`https://www.google.com/maps/search/?api=1&query=${lat},${lon}`}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
+      <MapEmbed lat={place.lat} lon={place.lon} zoom={place.zoom} />
+      <p className="map-chosen">
+        <span className="map-result-name">{placeName(place)}</span>
+        {place.area && <span className="map-result-area">{place.area}</span>}
+      </p>
+      {note?.trim() && <p className="map-note">{note}</p>}
+      <a className="viewer-link" href={href} target="_blank" rel="noopener noreferrer">
         Open in Google Maps ↗
       </a>
     </div>
