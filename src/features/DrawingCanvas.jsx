@@ -5,13 +5,17 @@ import { cssVar } from './helpers.js';
 const WIDTH = 480;
 const HEIGHT = 360;
 const SIZES = { Thin: 3, Thick: 10 };
+// The eraser is wider than the pen at the same size, so it's easier to clean up with.
+const ERASER_SCALE = 2.5;
 
 // Shared by the Drawing and Scratch Off features.
 // value is a PNG data URL (or null when blank).
+// colors is a list of { name, value }.
 export default function DrawingCanvas({ value, onChange, colors }) {
   const canvasRef = useRef(null);
   const lastPoint = useRef(null);
-  const [color, setColor] = useState(colors[0]);
+  const [color, setColor] = useState(colors[0].value);
+  const [erasing, setErasing] = useState(false);
   const [size, setSize] = useState(SIZES.Thin);
 
   const paintBlank = (ctx) => {
@@ -42,8 +46,9 @@ export default function DrawingCanvas({ value, onChange, colors }) {
   const strokeTo = (point) => {
     const ctx = canvasRef.current.getContext('2d');
     const from = lastPoint.current ?? point;
-    ctx.strokeStyle = color;
-    ctx.lineWidth = size;
+    // Erasing paints the paper color back on, so the saved picture stays a plain PNG.
+    ctx.strokeStyle = erasing ? cssVar('--color-paper') : color;
+    ctx.lineWidth = erasing ? size * ERASER_SCALE : size;
     ctx.lineCap = 'round';
     ctx.lineJoin = 'round';
     ctx.beginPath();
@@ -80,24 +85,29 @@ export default function DrawingCanvas({ value, onChange, colors }) {
         ref={canvasRef}
         width={WIDTH}
         height={HEIGHT}
-        className="drawing-canvas"
+        className={`drawing-canvas${erasing ? ' is-erasing' : ''}`}
         onPointerDown={handleDown}
         onPointerMove={handleMove}
         onPointerUp={handleUp}
         onPointerCancel={handleUp}
       />
-      <div className="drawing-tools">
+      <div className="drawing-colors">
         {colors.map((c) => (
           <button
-            key={c}
+            key={c.value}
             type="button"
-            className={`drawing-swatch${c === color ? ' is-active' : ''}`}
-            style={{ backgroundColor: c }}
-            onClick={() => setColor(c)}
-            aria-label={`Color ${c}`}
+            className={`drawing-swatch${!erasing && c.value === color ? ' is-active' : ''}`}
+            style={{ backgroundColor: c.value }}
+            onClick={() => {
+              setColor(c.value);
+              setErasing(false);
+            }}
+            aria-label={c.name}
+            aria-pressed={!erasing && c.value === color}
           />
         ))}
-        <span className="drawing-divider" />
+      </div>
+      <div className="drawing-tools">
         {Object.entries(SIZES).map(([label, px]) => (
           <button
             key={label}
@@ -108,6 +118,19 @@ export default function DrawingCanvas({ value, onChange, colors }) {
             {label}
           </button>
         ))}
+        <span className="drawing-divider" />
+        <button
+          type="button"
+          className={`drawing-size drawing-eraser${erasing ? ' is-active' : ''}`}
+          onClick={() => setErasing(true)}
+          aria-pressed={erasing}
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M15.5 3.5 21 9l-9.5 9.5H6L3 15.5z" />
+            <path d="M9.5 9.5 15 15M6 18.5h14" />
+          </svg>
+          Eraser
+        </button>
         <button type="button" className="drawing-clear" onClick={clear}>
           Clear
         </button>

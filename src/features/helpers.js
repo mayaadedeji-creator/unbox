@@ -2,8 +2,12 @@
 export const cssVar = (name) =>
   getComputedStyle(document.documentElement).getPropertyValue(name).trim();
 
+// The 10 colors for the Drawing gift and the Scratch Off card's drawing mode
+// (see "crayon box" in token.css). Each is { name, value }; the name labels the swatch.
 // A function rather than a list so the colors are read after the stylesheet has loaded.
-export const drawingColors = () => [cssVar('--color-ink'), cssVar('--color-primary'), cssVar('--color-pop')];
+const CRAYONS = ['black', 'red', 'orange', 'yellow', 'green', 'teal', 'blue', 'purple', 'pink', 'brown'];
+export const crayonColors = () =>
+  CRAYONS.map((name) => ({ name, value: cssVar(`--color-crayon-${name}`) }));
 
 // Returns a normalized http(s) URL, '' for an empty field, or null if it isn't a usable link.
 // "example.com/thing" is accepted and becomes "https://example.com/thing".

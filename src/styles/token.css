@@ -67,4 +67,16 @@
   --color-foil-text:    #6b6375;
   --color-shelf-wood:   #d9a46e;  /* the wall shelves on the fill page, close to the box's cardboard */
   --color-shelf-edge:   #b5824f;
+
+  /* The crayon box for drawing (Drawing gift and Scratch Off card): a rainbow plus black and brown */
+  --color-crayon-black:  #1f1b24;
+  --color-crayon-red:    #e5484d;
+  --color-crayon-orange: #f5893a;
+  --color-crayon-yellow: #f7c948;
+  --color-crayon-green:  #4cb36b;
+  --color-crayon-teal:   #2bb3a8;
+  --color-crayon-blue:   #3b82d6;
+  --color-crayon-purple: #8b5cf6;
+  --color-crayon-pink:   #ec6aa8;
+  --color-crayon-brown:  #8a5a3c;
 }
