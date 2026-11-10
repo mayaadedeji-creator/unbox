@@ -39,7 +39,7 @@ a gift of their own.
 | Letter | Types on lined notepaper (up to 1,500 characters) | The letter on paper |
 | Song | Searches for a song by name (or pastes a Spotify link) | A playable Spotify player |
 | Photo | Uploads a JPG or PNG | The photo |
-| Map Pin | Searches for a place | A map with a pin, plus "Open in Google Maps" |
+| Map Pin | Searches for a place and adds an optional note | A map with a pin, the note, plus "Open in Google Maps" |
 | Affirmation | Shuffles affirmations from the API until one fits | The chosen affirmation card |
 | Scratch Off Card | Types or draws a hidden message | A silver card to scratch off |
 | Voice Memo | Records up to 60 seconds | A playable recording |

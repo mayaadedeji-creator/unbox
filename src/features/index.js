@@ -41,7 +41,7 @@ const features = {
   'map-pin': {
     Editor: MapPinEditor,
     Viewer: viewers.MapPinViewer,
-    initialData: { place: null },
+    initialData: { place: null, note: '' },
     isComplete: (data) => Boolean(data.place),
   },
   affirmation: {

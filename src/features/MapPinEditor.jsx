@@ -1,11 +1,20 @@
 import { useState } from 'react';
+import { placeName, shortName, zoomFor } from './places.js';
 
-// OpenStreetMap's free geocoder. Its usage policy doesn't allow search-as-you-type,
-// so we only search when the user submits.
-const SEARCH_URL = 'https://nominatim.openstreetmap.org/search?format=jsonv2&limit=5&q=';
+// OpenStreetMap's free geocoder finds the places. Its usage policy doesn't allow
+// search-as-you-type, so we only search when the user submits.
+const SEARCH_URL =
+  'https://nominatim.openstreetmap.org/search?format=jsonv2&addressdetails=1&limit=5&q=';
 
-export function MapEmbed({ lat, lon }) {
-  const bbox = [lon - 0.01, lat - 0.006, lon + 0.01, lat + 0.006].join(',');
+const NOTE_MAX = 200;
+
+// OpenStreetMap's embeddable map with a marker. The zoom saved with the place sets how
+// much area is shown (close in on a café, further out for a city); older gifts have no
+// zoom, so they get the street-level view they always had.
+export function MapEmbed({ lat, lon, zoom = 14 }) {
+  const halfWidth = 180 / 2 ** zoom;
+  const halfHeight = halfWidth * 0.6;
+  const bbox = [lon - halfWidth, lat - halfHeight, lon + halfWidth, lat + halfHeight].join(',');
   return (
     <iframe
       title="Map"
@@ -20,6 +29,7 @@ export default function MapPinEditor({ value, onChange }) {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState(null);
   const [status, setStatus] = useState('idle');
+  const note = value.note ?? '';
 
   const search = async (e) => {
     e.preventDefault();
@@ -29,15 +39,26 @@ export default function MapPinEditor({ value, onChange }) {
     try {
       const res = await fetch(SEARCH_URL + encodeURIComponent(q));
       if (!res.ok) throw new Error(res.statusText);
-      setResults(await res.json());
+      const data = await res.json();
+      setResults(data.map((r) => ({ id: r.place_id, raw: r, ...shortName(r) })));
       setStatus('idle');
     } catch {
       setStatus('error');
     }
   };
 
-  const choose = (r) => {
-    onChange({ place: { label: r.display_name, lat: Number(r.lat), lon: Number(r.lon) } });
+  const choose = ({ raw, name, area }) => {
+    onChange({
+      place: {
+        label: raw.display_name,
+        name,
+        area,
+        lat: Number(raw.lat),
+        lon: Number(raw.lon),
+        zoom: zoomFor(raw),
+      },
+      note,
+    });
     setResults(null);
     setQuery('');
   };
@@ -45,7 +66,7 @@ export default function MapPinEditor({ value, onChange }) {
   return (
     <div className="feature-stack">
       <form className="feature-field" onSubmit={search}>
-        <label htmlFor="map-search">Search for a place</label>
+        <label htmlFor="map-search">{value.place ? 'Search for a different place' : 'Search for a place'}</label>
         <div className="feature-row">
           <input
             id="map-search"
@@ -62,15 +83,16 @@ export default function MapPinEditor({ value, onChange }) {
       </form>
 
       {status === 'error' && (
-        <span className="feature-error">Couldn't search right now — try again in a moment.</span>
+        <span className="feature-error">Couldn't search right now. Try again in a moment.</span>
       )}
       {results && results.length === 0 && <span className="feature-hint">No places found.</span>}
       {results && results.length > 0 && (
         <ul className="map-results">
           {results.map((r) => (
-            <li key={r.place_id}>
+            <li key={r.id}>
               <button type="button" onClick={() => choose(r)}>
-                {r.display_name}
+                <span className="map-result-name">{r.name}</span>
+                {r.area && <span className="map-result-area">{r.area}</span>}
               </button>
             </li>
           ))}
@@ -79,8 +101,24 @@ export default function MapPinEditor({ value, onChange }) {
 
       {value.place && (
         <>
-          <p className="map-chosen">📍 {value.place.label}</p>
-          <MapEmbed lat={value.place.lat} lon={value.place.lon} />
+          <MapEmbed lat={value.place.lat} lon={value.place.lon} zoom={value.place.zoom} />
+          <p className="map-chosen">
+            <span className="map-result-name">{placeName(value.place)}</span>
+            {value.place.area && <span className="map-result-area">{value.place.area}</span>}
+          </p>
+          <label className="feature-field">
+            Add a note (optional)
+            <textarea
+              rows={2}
+              maxLength={NOTE_MAX}
+              placeholder="Where we had our first coffee..."
+              value={note}
+              onChange={(e) => onChange({ place: value.place, note: e.target.value })}
+            />
+            <span className="feature-hint">
+              {note.length} / {NOTE_MAX}
+            </span>
+          </label>
         </>
       )}
     </div>

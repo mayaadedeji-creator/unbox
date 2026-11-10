@@ -124,6 +124,19 @@
   color: var(--color-ink-soft);
 }
 
+/* Links and the map note sit on the dark room too, so they need light colors */
+.activity .viewer-link {
+  color: var(--color-secondary);
+}
+
+.activity .map-note {
+  color: var(--color-paper);
+}
+
+.activity .map-chosen .map-result-area {
+  color: color-mix(in srgb, var(--color-paper) 75%, transparent);
+}
+
 .activity .affirmation-credit {
   color: color-mix(in srgb, var(--color-paper) 70%, transparent);
 }
