@@ -1,12 +1,12 @@
 /* The shelves hang along the top of the wall, clear of the wordmark and back link */
-.room > .shelves {
+.room-main > .shelves {
   margin-top: 104px;
 }
 
 /* Wide screens: the shelves hang on the wall without pushing the box down, so the box
    sits in exactly the same spot as on the preview page (no jump between the steps) */
 @media (min-aspect-ratio: 1/1) {
-  .room > .shelves {
+  .room-main > .shelves {
     position: absolute;
     top: 104px;
     left: 0;
