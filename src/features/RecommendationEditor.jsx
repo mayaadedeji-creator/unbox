@@ -2,7 +2,8 @@ import { normalizeLink } from './helpers.js';
 
 const RECOMMENDATION_MAX = 500;
 
-export default function RecommendationEditor({ value, onChange }) {
+// `onSubmit` is the overlay's "Add to box"; Enter in the link box runs it.
+export default function RecommendationEditor({ value, onChange, onSubmit }) {
   const linkInvalid = normalizeLink(value.link) === null;
 
   return (
@@ -28,6 +29,7 @@ export default function RecommendationEditor({ value, onChange }) {
           placeholder="https://..."
           value={value.link}
           onChange={(e) => onChange({ ...value, link: e.target.value })}
+          onKeyDown={(e) => e.key === 'Enter' && onSubmit?.()}
         />
         {linkInvalid && <span className="feature-error">That doesn't look like a link.</span>}
       </label>
