@@ -35,7 +35,12 @@ export default function AddressEditor({ to, from, setTo, setFrom, maxLength, onA
         <MailLabel
           to={to}
           from={from}
-          edit={{ setTo: clearError(setTo), setFrom: clearError(setFrom), maxLength }}
+          edit={{
+            setTo: clearError(setTo),
+            setFrom: clearError(setFrom),
+            maxLength,
+            onSubmit: attach,
+          }}
         />
       </div>
     </RoomOverlay>

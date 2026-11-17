@@ -48,7 +48,7 @@ export default function ActivityEditor({ item, existing, onSave, onRemove, onClo
       }
     >
       <div className="activity">
-        <Editor value={draft} onChange={change} />
+        <Editor value={draft} onChange={change} onSubmit={save} />
       </div>
     </RoomOverlay>
   );
