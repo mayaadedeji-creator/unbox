@@ -1,1 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="2000" zoomAndPan="magnify" viewBox="0 0 1500 1499.999933" height="2000" preserveAspectRatio="xMidYMid meet" version="1.0"><defs><clipPath id="28b090fb72"><path d="M 391.335938 211 L 1108.335938 211 L 1108.335938 1288 L 391.335938 1288 Z M 391.335938 211 " clip-rule="nonzero"/></clipPath></defs><g clip-path="url(#28b090fb72)"><path fill="#735e59" d="M 749.984375 211.320312 C 551.816406 211.320312 391.113281 372.023438 391.113281 570.269531 C 391.113281 768.4375 749.984375 1287.929688 749.984375 1287.929688 C 749.984375 1287.929688 1108.851562 768.4375 1108.851562 570.269531 C 1108.851562 372.023438 948.148438 211.320312 749.984375 211.320312 Z M 749.984375 740.179688 C 645.660156 740.179688 561.101562 655.699219 561.101562 551.285156 C 561.101562 447.042969 645.660156 362.484375 749.984375 362.484375 C 854.304688 362.484375 938.785156 447.042969 938.785156 551.285156 C 938.785156 655.699219 854.304688 740.179688 749.984375 740.179688 Z M 749.984375 740.179688 " fill-opacity="1" fill-rule="nonzero"/></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Pin on a folded kraft map. Kraft-box style: flat shapes, no outlines, darker edge bottom-right. -->
+  <path d="M30 80 L76 68 L76 170 L30 182 Z" fill="#EBCB9B"/>
+  <path d="M76 68 L124 82 L124 184 L76 170 Z" fill="#D9AA76"/>
+  <path d="M124 82 L170 70 L170 172 L124 184 Z" fill="#EBCB9B"/>
+  <path d="M30 120 L76 112 M76 136 L124 148 M124 112 L170 104" stroke="#D9AA76" stroke-width="4"/>
+  <path d="M76 136 L124 148" stroke="#C99A68" stroke-width="4"/>
+  <path d="M42 162 C64 140 84 162 108 136" fill="none" stroke="#E0607E" stroke-width="4" stroke-linecap="round" stroke-dasharray="7 7"/>
+  <ellipse cx="110" cy="136" rx="13" ry="4.5" fill="#B9895A"/>
+  <path transform="translate(4 4)" d="M110 134 C100 116 80 102 80 78 A30 30 0 1 1 140 78 C140 102 120 116 110 134 Z" fill="#A8405C"/>
+  <path d="M110 134 C100 116 80 102 80 78 A30 30 0 1 1 140 78 C140 102 120 116 110 134 Z" fill="#E0607E"/>
+  <circle cx="110" cy="78" r="12" fill="#FBF4E6"/>
+</svg>
