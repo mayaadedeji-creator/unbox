@@ -12,6 +12,18 @@
   overflow: hidden;
 }
 
+/* The page's own content, laid out like the room used to lay out its children.
+   Not positioned, so absolutely placed notes and shelves still measure from .room. */
+.room-main {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 .room-wordmark {
   position: absolute;
   top: 20px;
